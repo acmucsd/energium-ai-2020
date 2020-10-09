@@ -1,0 +1,16 @@
+node_modules
+lib
+coverage
+.nyc_output
+
+# we have mac users
+.DS_Store
+errorlogs
+replays
+local
+
+# these contain our test bots
+tests/bots
+
+server/keys
+server/.env
