@@ -1,5 +1,5 @@
 {
-  "name": "fall2020-ai-comp",
+  "name": "@acmucsd/fall2020-ai-comp",
   "version": "1.0.0",
   "description": "fall2020 ai competition!",
   "main": "lib/index.js",
