@@ -23,10 +23,10 @@ export class Position {
     }
   }
   hash(): number {
-    return this.x * 10E4 + this.y;
+    return this.x * 10e4 + this.y;
   }
   static parse(h: number): Position {
-    return new Position(h % 10E4, Math.floor(h / 10E4));
+    return new Position(h % 10e4, Math.floor(h / 10e4));
   }
   toString() {
     return `(${this.x}, ${this.y})`;

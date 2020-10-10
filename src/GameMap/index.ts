@@ -1,12 +1,12 @@
-import { Tile } from "../Tile";
-import { Position } from "../Tile/position";
-import { Unit } from "../Unit";
+import { Tile } from '../Tile';
+import { Position } from '../Tile/position';
+import { Unit } from '../Unit';
 
 export class GameMap {
   public map: Tile[][];
   public width = 0;
   public height = 0;
-  public bases: Array<{pos: Position, team: Unit.TEAM}> = [];
+  public bases: Array<{ pos: Position; team: Unit.TEAM }> = [];
   constructor(width: number, height: number) {
     this.height = this.width;
     this.width = this.height;

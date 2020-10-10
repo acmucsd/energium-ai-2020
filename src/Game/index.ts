@@ -1,11 +1,11 @@
-import { Match, MatchEngine, MatchWarn } from "dimensions-ai";
-import { MoveAction, SpawnAction, Action } from "../Actions";
-import { GameMap } from "../GameMap";
-import { Replay } from "../Replay";
-import { Tile } from "../Tile";
-import { Position } from "../Tile/position";
-import { AIMatchConfigs } from "../types";
-import { Unit } from "../Unit";
+import { Match, MatchEngine, MatchWarn } from 'dimensions-ai';
+import { MoveAction, SpawnAction, Action } from '../Actions';
+import { GameMap } from '../GameMap';
+import { Replay } from '../Replay';
+import { Tile } from '../Tile';
+import { Position } from '../Tile/position';
+import { AIMatchConfigs } from '../types';
+import { Unit } from '../Unit';
 
 export class Game {
   public turn = 0;
@@ -17,21 +17,19 @@ export class Game {
     teamStates: {
       [Unit.TEAM.A]: {
         units: new Map(),
-        points: 0
+        points: 0,
       },
       [Unit.TEAM.B]: {
         units: new Map(),
-        points: 0
+        points: 0,
       },
-    }
-  }
+    },
+  };
   constructor(public configs: AIMatchConfigs) {
     this.map = new GameMap(configs.width, configs.height);
   }
 
-  validateCommand(
-    cmd: MatchEngine.Command
-  ): Action {
+  validateCommand(cmd: MatchEngine.Command): Action {
     const strs = cmd.command.split(' ');
     if (strs.length === 0) {
       throw new MatchWarn(
@@ -42,7 +40,7 @@ export class Game {
       let valid = true;
       const team: Unit.TEAM = cmd.agentID;
       let errormsg = `Team ${cmd.agentID} sent invalid command`;
-      switch(action) {
+      switch (action) {
         case Game.ACTIONS.MOVE:
           if (strs.length === 3) {
             const unitid = parseInt(strs[1]);
@@ -76,7 +74,7 @@ export class Game {
                 action,
                 team,
                 unitid,
-                direction as Game.DIRECTIONS,
+                direction as Game.DIRECTIONS
               );
             }
           } else {
@@ -101,15 +99,9 @@ export class Game {
               break;
             }
             if (valid) {
-              return new SpawnAction(
-                action,
-                team,
-                x,
-                y
-              );
+              return new SpawnAction(action, team, x, y);
             }
-          }
-          else {
+          } else {
             valid = false;
           }
           break;
@@ -121,7 +113,6 @@ export class Game {
       }
     }
   }
-
 
   getTeamsUnits(team: Unit.TEAM): Map<Unit.ID, Unit> {
     return this.state.teamStates[team].units;
@@ -149,13 +140,9 @@ export class Game {
     this.state.teamStates[team].units.delete(unitid);
   }
 
-
   // spawn all units asked to be spawn
-  handleSpawnActions(
-    actions: Array<SpawnAction>,
-    match: Match
-  ): void {
-    const spawnedPositions: Set<number> = new Set()
+  handleSpawnActions(actions: Array<SpawnAction>, match: Match): void {
+    const spawnedPositions: Set<number> = new Set();
     const UNIT_COST = this.configs.parameters.UNIT_COST;
     actions.forEach((action) => {
       // check first if points available to use
@@ -164,23 +151,28 @@ export class Game {
         this.state.teamStates[action.team].points -= UNIT_COST;
         spawnedPositions.add(action.pos.hash());
         if (spawnedPositions.has(action.pos.hash())) {
-          match.log.warn(`Team ${action.team} Spawned more than once at ${action.pos.toString()}, all spawned units collided and will vanish`);
+          match.log.warn(
+            `Team ${
+              action.team
+            } Spawned more than once at ${action.pos.toString()}, all spawned units collided and will vanish`
+          );
         }
       } else {
-        match.log.warn(`Team ${action.team} does not have enough points to spawn another unit`);
+        match.log.warn(
+          `Team ${action.team} does not have enough points to spawn another unit`
+        );
       }
     });
   }
   // move all units and then destroy any that collide
-  handleMovementActions(
-    actions: Array<MoveAction>,
-    match: Match
-  ): void {
+  handleMovementActions(actions: Array<MoveAction>, match: Match): void {
     const tilesWithNewUnits: Set<Tile> = new Set();
     const idsOfUnitsThatMoved: Set<Unit.ID> = new Set();
     actions.forEach((action) => {
       if (idsOfUnitsThatMoved.has(action.unitid)) {
-        match.log.warn(`Team ${action.team}'s unit ${action.unitid} already moved, cannot move again this turn`);
+        match.log.warn(
+          `Team ${action.team}'s unit ${action.unitid} already moved, cannot move again this turn`
+        );
       } else {
         this.moveUnit(action.team, action.unitid, action.direction);
         const unit = this.getUnit(action.team, action.unitid);
@@ -203,8 +195,7 @@ export class Game {
     for (const unit of unitsToRemove) {
       this.destroyUnit(unit.team, unit.id);
     }
-    
-  };
+  }
 
   // give all units points depending on their tile
   handlePointsRelease(): void {
@@ -220,13 +211,13 @@ export class Game {
 
 export namespace Game {
   export interface State {
-    turn: 0,
+    turn: 0;
     teamStates: {
       [x in Unit.TEAM]: {
         units: Map<Unit.ID, Unit>;
         points: number;
-      }
-    }
+      };
+    };
   }
   export enum DIRECTIONS {
     NORTH = 'n',
@@ -242,6 +233,6 @@ export namespace Game {
     /**
      * formatted as `c x y`
      */
-    CREATE_UNIT = 'c'
+    CREATE_UNIT = 'c',
   }
 }

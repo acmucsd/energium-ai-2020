@@ -1,9 +1,11 @@
-import { Position } from "../Tile/position";
+import { Position } from '../Tile/position';
 
 export class Unit {
-  constructor(public team: Unit.TEAM, public id: number, public pos: Position) {
-
-  }
+  constructor(
+    public team: Unit.TEAM,
+    public id: number,
+    public pos: Position
+  ) {}
 }
 export namespace Unit {
   export enum TEAM {

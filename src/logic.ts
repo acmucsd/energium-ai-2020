@@ -7,7 +7,8 @@ import { Game } from './Game';
 import { generateGame } from './Game/gen';
 import { Replay } from './Replay';
 import { Unit } from './Unit';
-export class NameHereLogic {
+
+export class KingOfTheHillLogic {
   static async initialize(match: Match): Promise<void> {
     const state: State = {
       configs: deepCopy(DEFAULT_CONFIGS),
@@ -42,14 +43,13 @@ export class NameHereLogic {
 
     await this.sendAllAgentsGameInformation(match);
     await match.sendAll('D_DONE');
-
   }
 
   /**
    * Send game info as so
-   * 
+   *
    * p {team} {pts} - number of points the team has
-   * 
+   *
    * u {team} {id} {x} {y} - unit of that team with that id at x y
    */
   static async sendAllAgentsGameInformation(match: Match): Promise<void> {
@@ -71,13 +71,17 @@ export class NameHereLogic {
     teams.forEach((team) => {
       const units = game.state.teamStates[team].units;
       units.forEach((unit) => {
-        promises.push(match.sendAll(`u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y}`));
+        promises.push(
+          match.sendAll(`u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y}`)
+        );
       });
     });
     await Promise.all(promises);
-
-  };
-  static async update(match: Match, commands: Array<MatchEngine.Command>): Promise<Match.Status> {
+  }
+  static async update(
+    match: Match,
+    commands: Array<MatchEngine.Command>
+  ): Promise<Match.Status> {
     const state: State = match.state;
     const game = state.game;
     match.log.detail('Processing turn ' + game.state.turn);
@@ -94,10 +98,9 @@ export class NameHereLogic {
     });
     // if agent terminated, set all terminated agents scores to 0
     if (agentsTerminated[0] || agentsTerminated[1]) {
-      
-      return Match.Status.FINISHED;  
+      return Match.Status.FINISHED;
     }
-    
+
     return Match.Status.FINISHED;
   }
   static async getResults(match: Match): Promise<void> {}

@@ -6,6 +6,10 @@ export interface State {
   rng: () => number;
 }
 
+export interface AIMatchResults {
+  ranks: Array<{ rank: number; agentID: number }>;
+}
+
 export interface AIMatchConfigs {
   storeReplay: boolean;
   width: number;
@@ -15,5 +19,5 @@ export interface AIMatchConfigs {
   parameters: {
     UNIT_COST: number;
     MAX_TURNS: number;
-  }
+  };
 }

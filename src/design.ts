@@ -1,23 +1,17 @@
-import { Design, Match } from 'dimensions-ai';
+import { Design, Match, MatchEngine } from 'dimensions-ai';
 import { Game } from './Game';
+import { KingOfTheHillLogic } from './logic';
 import { State } from './types';
 
-export class NameDesign extends Design {
+export class KingOfTheHillDesign extends Design {
   async initialize(match: Match): Promise<void> {
-    match.state.game = new Game();
+    return KingOfTheHillLogic.initialize(match);
   }
-  async update(match: Match): Promise<Match.Status> {
-    const state: State = match.state;
-    if (this.gameOver(state.game)) {
-      return Match.Status.FINISHED;
-    }
-    return;
-  }
-  gameOver(game: Game): boolean {
-    if (game.turn > 200) {
-      return true;
-    }
-    return false;
+  async update(
+    match: Match,
+    commands: Array<MatchEngine.Command>
+  ): Promise<Match.Status> {
+    return KingOfTheHillLogic.update(match, commands);
   }
   async getResults(match: Match): Promise<void> {}
 }

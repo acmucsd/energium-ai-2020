@@ -1,8 +1,8 @@
-import { Unit } from "../Unit";
-import { Position } from "./position";
+import { Unit } from '../Unit';
+import { Position } from './position';
 
 export class Tile {
-  public pointsPerTurn = 0
+  public pointsPerTurn = 0;
   public pos: Position;
   public units: Map<Unit.ID, Unit> = new Map();
   public baseTeam: Unit.TEAM = null;

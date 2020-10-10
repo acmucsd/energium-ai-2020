@@ -15,7 +15,7 @@ export class MoveAction extends Action {
     action: Game.ACTIONS,
     team: Unit.TEAM,
     public unitid: Unit.ID,
-    public direction: Game.DIRECTIONS,
+    public direction: Game.DIRECTIONS
   ) {
     super(action, team);
   }
@@ -23,12 +23,7 @@ export class MoveAction extends Action {
 
 export class SpawnAction extends Action {
   public pos: Position;
-  constructor(
-    action: Game.ACTIONS,
-    team: Unit.TEAM,
-    x: number,
-    y: number
-  ) {
+  constructor(action: Game.ACTIONS, team: Unit.TEAM, x: number, y: number) {
     super(action, team);
     this.pos = new Position(x, y);
   }

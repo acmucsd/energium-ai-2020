@@ -13,7 +13,7 @@ export class Replay {
         ppt: number;
       }>
     >;
-    bases: Array<{x: number, y: number, team: Unit.TEAM}>
+    bases: Array<{ x: number; y: number; team: Unit.TEAM }>;
     allCommands: Array<Array<MatchEngine.Command>>;
   } = {
     map: [],
@@ -37,8 +37,8 @@ export class Replay {
       this.data.map.push(
         gameMap.getRow(y).map((tile) => {
           return {
-            ppt: tile.pointsPerTurn
-          }
+            ppt: tile.pointsPerTurn,
+          };
         })
       );
     }
@@ -46,8 +46,8 @@ export class Replay {
       this.data.bases.push({
         x: base.pos.x,
         y: base.pos.y,
-        team: base.team
-      })
+        team: base.team,
+      });
     });
   }
   public writeOut(): void {
