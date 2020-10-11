@@ -1,4 +1,6 @@
-import { Match, MatchEngine, MatchWarn } from 'dimensions-ai';
+import { Match } from 'dimensions-ai/lib/main/Match';
+import { MatchWarn } from 'dimensions-ai/lib/main/DimensionError';
+import { MatchEngine } from 'dimensions-ai/lib/main/MatchEngine';
 import { MoveAction, SpawnAction, Action } from '../Actions';
 import { GameMap } from '../GameMap';
 import { Replay } from '../Replay';

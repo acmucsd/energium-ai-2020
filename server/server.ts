@@ -1,9 +1,11 @@
-import * as Dimensions from 'dimensions-ai';
-import { LuxDesign } from '@lux-ai/2020-challenge';
+import {create} from 'dimensions-ai/lib/main';
+import {Agent} from 'dimensions-ai/lib/main/Agent';
+import { KingOfTheHillDesign } from '@acmucsd/kingofthehill-2020';
 import { GCloudStorage, Logger, MongoDB, Tournament } from 'dimensions-ai';
 
-const design = new LuxDesign('Lux Design');
-const acmdim = Dimensions.create(design, {
+const design = new KingOfTheHillDesign('kothdesign');
+//@ts-ignore
+const acmdim = create(design, {
   name: 'acmdimension',
   id: 'acmdim',
   defaultMatchConfigs: {},
@@ -14,7 +16,7 @@ const acmdim = Dimensions.create(design, {
 });
 
 /** Define the images to use for each agent */
-const languageSpecificAgentOptions: Dimensions.Agent.LanguageSpecificOptions = {
+const languageSpecificAgentOptions: Agent.LanguageSpecificOptions = {
   '.py': {
     image: 'docker.io/python',
   },
@@ -34,7 +36,7 @@ const setup = async () => {
   acmdim.createTournament([], {
     rankSystem: Tournament.RankSystemTypes.TRUESKILL,
     type: Tournament.Type.LADDER,
-    resultHandler: LuxDesign.resultHandler,
+    resultHandler: KingOfTheHillDesign.resultHandler,
     agentsPerMatch: [2],
     consoleDisplay: false,
     tournamentConfigs: {

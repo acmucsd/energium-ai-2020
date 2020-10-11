@@ -1,3 +1,4 @@
+import { Tournament } from 'dimensions-ai/lib/main/Tournament';
 import { Design } from 'dimensions-ai/lib/main/Design';
 import { Match } from 'dimensions-ai/lib/main/Match';
 import { MatchEngine } from 'dimensions-ai/lib/main/MatchEngine';
@@ -15,6 +16,7 @@ export class KingOfTheHillDesign extends Design {
   ): Promise<Match.Status> {
     return KingOfTheHillLogic.update(match, commands);
   }
+  
   async getResults(match: Match): Promise<AIMatchResults> {
     const state: State = match.state;
     const game = state.game;
@@ -66,5 +68,15 @@ export class KingOfTheHillDesign extends Design {
       ],
       ...otherData,
     };
+  }
+  static resultHandler(
+    results: AIMatchResults
+  ): Tournament.RankSystem.Results {
+    const rankings = [];
+    for (let i = 0; i < results.ranks.length; i++) {
+      const info = results.ranks[i];
+      rankings.push({ rank: info.rank, agentID: info.agentID });
+    }
+    return { ranks: rankings };
   }
 }

@@ -1,4 +1,5 @@
-import { Match, MatchEngine } from 'dimensions-ai';
+import { Match } from 'dimensions-ai/lib/main/Match';
+import { MatchEngine } from 'dimensions-ai/lib/main/MatchEngine';
 import fs from 'fs';
 import path from 'path';
 import { GameMap } from '../GameMap';

@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dimensions-ai": "^4.5.5"
+    "@acmucsd/kingofthehill-2020": "^1.0.0",
+    "dimensions-ai": "^4.6.4"
   },
   "devDependencies": {
     "typescript": "^4.0.2"
