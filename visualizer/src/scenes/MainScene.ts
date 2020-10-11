@@ -1,15 +1,15 @@
-import { State } from '@acmucsd/kingofthehill-2020/lib/types';
-import { DEFAULT_CONFIGS } from '@acmucsd/kingofthehill-2020/lib/defaults';
-import { KingOfTheHillLogic } from '@acmucsd/kingofthehill-2020/lib/logic';
-import { Game } from '@acmucsd/kingofthehill-2020/lib/Game';
-import { Unit } from '@acmucsd/kingofthehill-2020/lib/Unit';
+import { State } from '@acmucsd/kingofthehill-2020/lib/es6/types';
+import { DEFAULT_CONFIGS } from '@acmucsd/kingofthehill-2020/lib/es6/defaults';
+import { KingOfTheHillLogic } from '@acmucsd/kingofthehill-2020/lib/es6/logic';
+import { Game } from '@acmucsd/kingofthehill-2020/lib/es6/Game';
+import { Unit } from '@acmucsd/kingofthehill-2020/lib/es6/Unit';
 import {
   hashMapCoords,
   mapCoordsToPixels,
   mapPosToPixels,
   memorySizeOf,
 } from './utils';
-import { Position } from '@acmucsd/kingofthehill-2020/lib/Tile/position';
+import { Position } from '@acmucsd/kingofthehill-2020/lib/es6/Tile/position';
 
 export interface Frame {
   teamStates: FrameTeamStateData;
@@ -108,6 +108,7 @@ class MainScene extends Phaser.Scene {
   }
 
   loadReplayData(replayData: any): void {
+    console.log(replayData)
     this.kothgame = new Game(DEFAULT_CONFIGS);
     let width = replayData.map[0].length;
     let height = replayData.map.length;
@@ -214,6 +215,7 @@ class MainScene extends Phaser.Scene {
   public currentSelectedTilePos: Position = null;
 
   create(configs: GameCreationConfigs) {
+    console.log(configs);
     this.loadReplayData(configs.replayData);
     this.handleUnitClicked = configs.handleUnitClicked;
     this.handleTileClicked = configs.handleTileClicked;

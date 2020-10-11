@@ -1,12 +1,12 @@
 {
   "name": "@acmucsd/kingofthehill-2020",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "fall2020 ai competition! Modeled after king of the hill",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/es5/index.js",
+  "types": "lib/es5/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf lib && tsc -p tsconfig-build.json",
+    "build": "rm -rf lib && tsc -p tsconfig-build.json && tsc -p tsconfig-buildes5.json",
     "prettier": "prettier --write 'src/**/*.ts'",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix --ext .ts"
@@ -23,11 +23,15 @@
     "ACM",
     "AI"
   ],
+  "files": [
+    "lib/**/*"
+  ],
   "author": "ACM AI @ UCSD",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/acmucsd/fall2020-ai-comp/issues"
   },
+  "sideEffects": false,
   "homepage": "https://github.com/acmucsd/fall2020-ai-comp#readme",
   "dependencies": {
     "colors": "^1.4.0",

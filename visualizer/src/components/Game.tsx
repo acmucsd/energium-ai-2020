@@ -63,13 +63,13 @@ export const GameComponent = () => {
     main.renderFrame(turn);
     setFrame(main.frames[turn]);
   };
+  console.log("Hello");
   const handleUpload = () => {
     setUploading(true);
     if (fileInput.current.files.length) {
       const file = fileInput.current.files[0];
       const name = file.name;
       const meta = name.split('.');
-
       if (meta[meta.length - 1] === 'json') {
         file
           .text()
@@ -79,6 +79,7 @@ export const GameComponent = () => {
               game.destroy(true, false);
             }
             setReady(false);
+
             const newgame = createGame({
               replayData: data,
               handleUnitClicked,

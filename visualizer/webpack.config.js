@@ -27,11 +27,13 @@ module.exports = {
         test: /\.ts$/,
         loader: 'ts-loader',
         exclude: '/node_modules/',
+        sideEffects: true,
       },
       {
         test: /\.(tsx)$/,
         use: 'ts-loader',
         exclude: '/node_modules/',
+        sideEffects: true,
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
