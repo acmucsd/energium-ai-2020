@@ -1,4 +1,5 @@
 import { Game } from './Game';
+import { Unit } from './Unit';
 
 export interface State {
   game: Game;
@@ -8,6 +9,11 @@ export interface State {
 
 export interface AIMatchResults {
   ranks: Array<{ rank: number; agentID: number }>;
+  stats: {
+    [x in number]: {
+      points: number;
+    };
+  };
 }
 
 export interface AIMatchConfigs {

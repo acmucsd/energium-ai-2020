@@ -3,14 +3,14 @@ import { Position } from '../Tile/position';
 import { Unit } from '../Unit';
 
 export class GameMap {
-  public map: Tile[][];
+  public map: Tile[][] = [];
   public width = 0;
   public height = 0;
   public bases: Array<{ pos: Position; team: Unit.TEAM }> = [];
   constructor(width: number, height: number) {
-    this.height = this.width;
-    this.width = this.height;
-    for (let y = 0; y < height; y++) {
+    this.height = height;
+    this.width = width;
+    for (let y = 0; y < this.height; y++) {
       this.map[y] = new Array(this.width);
       for (let x = 0; x < this.width; x++) {
         this.map[y][x] = new Tile(new Position(x, y));

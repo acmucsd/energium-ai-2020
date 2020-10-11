@@ -2,7 +2,6 @@ import { Match, MatchEngine } from 'dimensions-ai';
 import fs from 'fs';
 import path from 'path';
 import { GameMap } from '../GameMap';
-import { Position } from '../Tile/position';
 import { Unit } from '../Unit';
 
 export class Replay {

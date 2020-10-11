@@ -1,0 +1,12 @@
+{
+  "DIRECTIONS": {
+    "NORTH": "n",
+    "WEST": "w",
+    "EAST": "e",
+    "SOUTH": "s"
+  },
+  "PARAMETERS": {
+    "UNIT_COST": 10,
+    "MAX_TURNS": 200
+  }
+}

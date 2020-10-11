@@ -6,7 +6,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p tsconfig-build.json",
+    "build": "rm -rf lib && tsc -p tsconfig-build.json",
     "prettier": "prettier --write 'src/**/*.ts'",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix --ext .ts"
@@ -31,12 +31,14 @@
   "homepage": "https://github.com/acmucsd/fall2020-ai-comp#readme",
   "dependencies": {
     "colors": "^1.4.0",
-    "dimensions-ai": "^4.6.1",
+    "dimensions-ai": "^4.6.4",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
+    "esm": "^3.2.25",
     "eslint": "^7.11.0",
     "prettier": "^2.1.2",
-    "ts-node": "^9.0.0"
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
   }
 }
