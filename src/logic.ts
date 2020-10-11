@@ -17,13 +17,14 @@ export class KingOfTheHillLogic {
       game: null,
     };
     state.configs = deepMerge(state.configs, match.configs);
+    let rng = Math.random;
     if (state.configs.seed !== undefined) {
-      state.game.rng = seedrandom(`${state.configs.seed}`);
+      rng = seedrandom(`${state.configs.seed}`);
     } else {
-      state.game.rng = seedrandom(`${Math.random()}`);
+      rng = seedrandom(`${Math.random()}`);
     }
     let game: Game;
-    game = generateGame(state.configs);
+    game = generateGame(state.configs, rng);
     state.game = game;
     if (state.configs.storeReplay) {
       game.replay = new Replay(match);

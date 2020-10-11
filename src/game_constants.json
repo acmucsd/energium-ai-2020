@@ -6,7 +6,7 @@
     "SOUTH": "s"
   },
   "PARAMETERS": {
-    "UNIT_COST": 10,
+    "UNIT_COST": 50,
     "MAX_TURNS": 200,
     "INITIAL_POINTS": 50
   }

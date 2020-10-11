@@ -6,8 +6,9 @@ import { AIMatchConfigs } from '../types';
 
 const sizes = [12, 16, 24, 36];
 
-export const generateGame = (configs: AIMatchConfigs) => {
+export const generateGame = (configs: AIMatchConfigs, rng: () => number) => {
   const game: Game = new Game(configs);
+  game.rng = rng;
 
   // game.map.getTile(0, 0).pointsPerTurn = 4;
   // game.map.getTile(15, 0).pointsPerTurn = 4;
@@ -181,5 +182,5 @@ export const generateRandomMap = (game: Game) => {
 
   console.log(game.map.getMapString());
 }
-generateGame(DEFAULT_CONFIGS);
+// generateGame(DEFAULT_CONFIGS, Math.rarn);
 
