@@ -1,6 +1,6 @@
 {
   "name": "@acmucsd/kingofthehill-2020",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "fall2020 ai competition! Modeled after king of the hill",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

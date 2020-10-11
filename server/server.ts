@@ -34,7 +34,7 @@ const setup = async () => {
   // });
   await acmdim.use(mongo);
   // await acmdim.use(gcs);
-  acmdim.createTournament([], {
+  acmdim.createTournament([js, js], {
     rankSystem: Tournament.RankSystemTypes.TRUESKILL,
     type: Tournament.Type.LADDER,
     resultHandler: KingOfTheHillDesign.resultHandler,

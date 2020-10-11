@@ -36,9 +36,11 @@ export class KingOfTheHillDesign extends Design {
       stats: {
         [Unit.TEAM.A]: {
           points: teamAPts,
+          terminated: match.agents[Unit.TEAM.A].isTerminated()
         },
         [Unit.TEAM.B]: {
           points: teamBPts,
+          terminated: match.agents[Unit.TEAM.B].isTerminated()
         },
         seed: state.configs.seed,
         turnsElapsed: game.turn
