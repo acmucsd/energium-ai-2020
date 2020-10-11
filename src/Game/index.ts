@@ -10,7 +10,6 @@ import { AIMatchConfigs } from '../types';
 import { Unit } from '../Unit';
 
 export class Game {
-  public turn = 0;
   public replay: Replay;
   public map: GameMap;
   public rng: () => number = Math.random;

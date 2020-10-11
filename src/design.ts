@@ -43,7 +43,7 @@ export class KingOfTheHillDesign extends Design {
           terminated: match.agents[Unit.TEAM.B].isTerminated()
         },
         seed: state.configs.seed,
-        turnsElapsed: game.turn
+        turnsElapsed: game.state.turn
       },
     };
 
