@@ -25,32 +25,32 @@ const languageSpecificAgentOptions: Agent.LanguageSpecificOptions = {
   },
 };
 
+const js = '../kits/js/bot.js';
 const setup = async () => {
   const mongo = new MongoDB(process.env.MONGO_CONNECTION_STRING);
-  const gcs = new GCloudStorage({
-    projectId: 'lux-ai-test',
-    keyFilename: './keys/gcs-key.json',
-  });
+  // const gcs = new GCloudStorage({
+  //   projectId: 'lux-ai-test',
+  //   keyFilename: './keys/gcs-key.json',
+  // });
   await acmdim.use(mongo);
-  await acmdim.use(gcs);
+  // await acmdim.use(gcs);
   acmdim.createTournament([], {
     rankSystem: Tournament.RankSystemTypes.TRUESKILL,
     type: Tournament.Type.LADDER,
     resultHandler: KingOfTheHillDesign.resultHandler,
     agentsPerMatch: [2],
-    consoleDisplay: false,
+    consoleDisplay: true,
     tournamentConfigs: {
-      syncConfigs: true,
+      syncConfigs: false,
     },
     defaultMatchConfigs: {
       storeErrorLogs: true,
       loggingLevel: Logger.LEVEL.NONE,
       debug: false,
-      mapType: 'debug',
       languageSpecificAgentOptions,
     },
     name: 'ACM AI Fall 2020 Tournament',
-    id: 'acmtourney-fall2020',
+    id: 'tourney',
   });
 };
 setup();
