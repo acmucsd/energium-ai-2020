@@ -25,6 +25,13 @@ export class KingOfTheHillDesign extends Design {
     let teamAPts = game.state.teamStates[Unit.TEAM.A].points;
     let teamBPts = game.state.teamStates[Unit.TEAM.B].points;
 
+    if (match.agents[Unit.TEAM.A].isTerminated()) {
+      teamAPts = 0;
+    }
+    if (match.agents[Unit.TEAM.B].isTerminated()) {
+      teamBPts = 0;
+    }
+
     let otherData = {
       stats: {
         [Unit.TEAM.A]: {
@@ -33,6 +40,8 @@ export class KingOfTheHillDesign extends Design {
         [Unit.TEAM.B]: {
           points: teamBPts,
         },
+        seed: state.configs.seed,
+        turnsElapsed: game.turn
       },
     };
 

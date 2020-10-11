@@ -18,11 +18,10 @@ export class KingOfTheHillLogic {
     };
     state.configs = deepMerge(state.configs, match.configs);
     let rng = Math.random;
-    if (state.configs.seed !== undefined) {
-      rng = seedrandom(`${state.configs.seed}`);
-    } else {
-      rng = seedrandom(`${Math.random()}`);
+    if (state.configs.seed === undefined) {
+      state.configs.seed = Math.floor(Math.random() * 10E8);
     }
+    rng = seedrandom(`${state.configs.seed}`);
     let game: Game;
     game = generateGame(state.configs, rng);
     state.game = game;
@@ -35,6 +34,7 @@ export class KingOfTheHillLogic {
 
     if (game.replay) {
       game.replay.writeMap(state.game.map);
+      game.replay.data.seed = state.configs.seed;
     }
 
     for (let i = 0; i < match.agents.length; i++) {

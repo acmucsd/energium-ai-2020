@@ -8,6 +8,7 @@ import { Unit } from '../Unit';
 export class Replay {
   public replayFilePath: string = null;
   public data: {
+    seed: number;
     map: Array<
       Array<{
         ppt: number;
@@ -16,6 +17,7 @@ export class Replay {
     bases: Array<{ x: number; y: number; team: Unit.TEAM }>;
     allCommands: Array<Array<MatchEngine.Command>>;
   } = {
+    seed: undefined,
     map: [],
     bases: [],
     allCommands: [],
