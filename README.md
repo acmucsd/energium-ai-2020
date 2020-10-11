@@ -1,2 +1,1 @@
-# fall2020-ai-comp
-fall2020 ai competition!
+# King of the Hill AI Competition at UCSD

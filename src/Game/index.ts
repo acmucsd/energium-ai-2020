@@ -11,6 +11,7 @@ export class Game {
   public turn = 0;
   public replay: Replay;
   public map: GameMap;
+  public rng: () => number = Math.random;
   private globalUnitIDCount = 0;
   public state: Game.State = {
     turn: 0,
@@ -26,7 +27,6 @@ export class Game {
     },
   };
   constructor(public configs: AIMatchConfigs) {
-    this.map = new GameMap(configs.width, configs.height);
     Unit.ALL_TEAMS.forEach((team) => {
       this.state.teamStates[team].points = configs.parameters.INITIAL_POINTS;
     });

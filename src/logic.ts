@@ -15,11 +15,12 @@ export class KingOfTheHillLogic {
     const state: State = {
       configs: deepCopy(DEFAULT_CONFIGS),
       game: null,
-      rng: seedrandom(`${Math.random()}`),
     };
     state.configs = deepMerge(state.configs, match.configs);
     if (state.configs.seed !== undefined) {
-      state.rng = seedrandom(`${state.configs.seed}`);
+      state.game.rng = seedrandom(`${state.configs.seed}`);
+    } else {
+      state.game.rng = seedrandom(`${Math.random()}`);
     }
     let game: Game;
     game = generateGame(state.configs);

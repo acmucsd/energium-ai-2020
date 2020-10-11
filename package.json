@@ -1,7 +1,7 @@
 {
-  "name": "@acmucsd/fall2020-ai-comp",
+  "name": "@acmucsd/kingofthehill-2020",
   "version": "1.0.0",
-  "description": "fall2020 ai competition!",
+  "description": "fall2020 ai competition! Modeled after king of the hill",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

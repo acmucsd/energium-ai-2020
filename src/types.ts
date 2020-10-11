@@ -4,7 +4,6 @@ import { Unit } from './Unit';
 export interface State {
   game: Game;
   configs: AIMatchConfigs;
-  rng: () => number;
 }
 
 export interface AIMatchResults {
