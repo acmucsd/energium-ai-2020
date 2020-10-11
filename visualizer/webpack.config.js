@@ -7,9 +7,7 @@ const {
 } = require('webpack-bundle-analyzer');
 
 var pathToPhaser = path.join(__dirname, '/node_modules/phaser/');
-// var pathToLux = path.join(__dirname, "/node_modules/@lux-ai/2020-challenge");
 var phaser = path.join(pathToPhaser, 'dist/phaser.js');
-// var lux = path.join(pathToLux, "dist/lux.js");
 
 module.exports = {
   // entry: "./src/main.ts",
@@ -43,7 +41,6 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
-      // { test: /lux\.js$/, loader: "expose-loader?Lux" }
     ],
   },
   devServer: {
@@ -58,7 +55,6 @@ module.exports = {
     extensions: ['.ts', '.js', '.tsx'],
     alias: {
       phaser: phaser,
-      // lux: lux,
     },
   },
   node: {

@@ -95,7 +95,7 @@ export const GameComponent = () => {
       <Button variant="contained" component="label">
         Upload Replay{' '}
         <input
-          accept=".json, .luxr"
+          accept=".json, .replay"
           type="file"
           style={{ display: 'none' }}
           onChange={handleUpload}
@@ -117,7 +117,7 @@ export const GameComponent = () => {
   return (
     <div className="Game">
       <div className="gameContainer">
-        <h1>Lux AI Challenge</h1>
+        <h1>King of the Hill AI Challenge</h1>
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Card
@@ -166,7 +166,6 @@ export const GameComponent = () => {
                 {selectedTileData && (
                   <TileStats
                     {...selectedTileData}
-                    cities={currentFrame.cityData}
                   />
                 )}
                 <GameStats turn={turn} />
@@ -175,18 +174,7 @@ export const GameComponent = () => {
                     return (
                       <PlayerStats
                         key={team}
-                        workerUnits={currentFrame.teamStates[team].workers}
-                        cartUnits={currentFrame.teamStates[team].carts}
-                        cities={currentFrame.teamStates[team].citiesOwned.map(
-                          (id) => {
-                            const city = currentFrame.cityData.get(id);
-                            return {
-                              fuel: city.fuel,
-                              cells: city.cityTilePositions.length,
-                              cityid: id,
-                            };
-                          }
-                        )}
+                        points={currentFrame.teamStates[team].points}
                         team={team}
                       />
                     );

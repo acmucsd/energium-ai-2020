@@ -1,5 +1,5 @@
-import { GameMap } from '@lux-ai/2020-challenge';
-import { Position } from '@lux-ai/2020-challenge/lib/GameMap/position';
+import { GameMap } from '@acmucsd/kingofthehill-2020/lib/GameMap';
+import { Position } from '@acmucsd/kingofthehill-2020/lib/Tile/position';
 
 export const mapPosToPixels = (pos: Position): [number, number] => {
   return mapCoordsToPixels(pos.x, pos.y);
