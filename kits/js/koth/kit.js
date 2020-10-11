@@ -84,7 +84,6 @@ class Agent {
     this.mapWidth = width;
     this.mapHeight = height;
     this.map = new GameMap(width, height);
-    console.error(width, height);
     this.players = [new Player(0), new Player(1)];
     await this.retrieveUpdates();
   }

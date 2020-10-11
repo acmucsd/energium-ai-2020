@@ -1,3 +1,4 @@
+import 'colors';
 import { Tile } from '../Tile';
 import { Position } from '../Tile/position';
 import { Unit } from '../Unit';
@@ -16,6 +17,13 @@ export class GameMap {
         this.map[y][x] = new Tile(new Position(x, y));
       }
     }
+  }
+  setBase(team: Unit.TEAM, x: number, y: number): void {
+    this.bases.push({
+      pos: new Position(x, y),
+      team,
+    });
+    this.getTile(x, y).baseTeam = team;
   }
   inMap(pos: Position): boolean {
     return !(
@@ -55,5 +63,51 @@ export class GameMap {
       tiles.push(this.getTile(cell.pos.x - 1, cell.pos.y));
     }
     return tiles;
+  }
+
+  /**
+   * Return printable map string
+   */
+  getMapString(): string {
+    let str = '';
+    for (let y = 0; y < this.height; y++) {
+      str +=
+        this.getRow(y)
+          .map((tile) => {
+            if (tile.units.size > 0) {
+              if (tile.units.size === 1) {
+                let unitstr = '';
+                tile.units.forEach((unit) => {
+                  let identifier = unit.id + '';
+                  if (unit.team === Unit.TEAM.A) {
+                    unitstr = identifier.cyan;
+                  } else {
+                    unitstr = identifier.red;
+                  }
+                });
+                return unitstr;
+              } 
+            }
+            else if (tile.isBaseTile()) {
+              if (tile.baseTeam === Unit.TEAM.A) {
+                return `▩`.cyan;
+              } else {
+                return `▩`.red;
+              }
+            }
+            else {
+              if (tile.pointsPerTurn > 0) {
+                return `${tile.pointsPerTurn}`.green;
+              } else if (tile.pointsPerTurn < 0) {
+                return `${Math.abs(tile.pointsPerTurn)}`.red;
+              }
+              else {
+                return '0'.gray;
+              }
+            }
+          })
+          .join(' ') + '\n';
+    }
+    return str;
   }
 }

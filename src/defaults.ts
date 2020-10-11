@@ -7,5 +7,6 @@ export const DEFAULT_CONFIGS: AIMatchConfigs = {
   storeReplay: true,
   seed: undefined,
   debug: false,
+  debugDelay: 100,
   parameters: GAME_CONSTANTS.PARAMETERS,
 };

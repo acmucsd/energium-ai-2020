@@ -1,5 +1,5 @@
-import {Match} from 'dimensions-ai/lib/main/Match';
-import {MatchEngine} from 'dimensions-ai/lib/main/MatchEngine';
+import { Match } from 'dimensions-ai/lib/main/Match';
+import { MatchEngine } from 'dimensions-ai/lib/main/MatchEngine';
 import { State } from './types';
 import { deepCopy, deepMerge, sleep } from './utils';
 import seedrandom from 'seedrandom';
@@ -44,7 +44,7 @@ export class KingOfTheHillLogic {
     await match.sendAll(`${state.game.map.width} ${state.game.map.height}`);
 
     // send all agents base locations and nonzero points locs
-    const map =state.game.map;
+    const map = state.game.map;
     for (const base of map.bases) {
       await match.sendAll(`b ${base.team} ${base.pos.x} ${base.pos.y}`);
     }
@@ -53,11 +53,13 @@ export class KingOfTheHillLogic {
       for (let x = 0; x < map.width; x++) {
         const tile = map.getTile(x, y);
         if (tile.pointsPerTurn > 0) {
-          tileMessages.push(match.sendAll(`t ${tile.pos.x} ${tile.pos.y} ${tile.pointsPerTurn}`));
+          tileMessages.push(
+            match.sendAll(`t ${tile.pos.x} ${tile.pos.y} ${tile.pointsPerTurn}`)
+          );
         }
       }
     }
-    
+
     await Promise.all(tileMessages);
 
     await this.sendAllAgentsGameInformation(match);
@@ -127,9 +129,7 @@ export class KingOfTheHillLogic {
       // get the command and the agent that issued it and handle appropriately
       const agentID = commands[i].agentID;
       try {
-        const action = game.validateCommand(
-          commands[i]
-        );
+        const action = game.validateCommand(commands[i]);
         // TODO: this might be slow, depends on its optimized and compiled
         const newactionArray = [...actionsMap.get(action.action), action];
         actionsMap.set(action.action, newactionArray);
@@ -137,10 +137,41 @@ export class KingOfTheHillLogic {
         match.throw(agentID, err);
       }
     }
-    game.handleSpawnActions(actionsMap.get(Game.ACTIONS.CREATE_UNIT) as SpawnAction[], match);
-    game.handleMovementActions(actionsMap.get(Game.ACTIONS.MOVE) as MoveAction[], match);
+    const spawnedPositions = game.handleSpawnActions(
+      actionsMap.get(Game.ACTIONS.CREATE_UNIT) as SpawnAction[],
+      match
+    );
+    game.handleMovementActions(
+      actionsMap.get(Game.ACTIONS.MOVE) as MoveAction[],
+      match
+    );
+
+    // remove any units that collided because they spawned into a taken tile.
+    const unitsToRemove: Array<Unit> = [];
+    spawnedPositions.forEach((pos) => {
+      const tile = game.map.getTileByPos(pos);
+      if (tile.units.size > 1) {
+        tile.units.forEach((unit) => {
+          unitsToRemove.push(unit);
+        });
+      }
+    });
+    for (const unit of unitsToRemove) {
+      match.log.warn(
+        `Team ${unit.team} spawned unit collided at ${unit.pos}`
+      );
+      game.destroyUnit(unit.team, unit.id);
+    }
     game.handlePointsRelease();
+
+    if (state.configs.debug) {
+      await this.debugViewer(game);
+    }
+
     if (this.gameOver(game)) {
+      if (game.replay) {
+        game.replay.writeOut();
+      }
       return Match.Status.FINISHED;
     }
     await this.sendAllAgentsGameInformation(match);
@@ -152,5 +183,27 @@ export class KingOfTheHillLogic {
       return true;
     }
     return false;
+  }
+  static async debugViewer(game: Game): Promise<void> {
+    console.clear();
+    console.log(game.map.getMapString());
+    console.log(`Turn: ${game.state.turn}`);
+    const teams = [Unit.TEAM.A, Unit.TEAM.B];
+    for (const team of teams) {
+      const teamstate = game.state.teamStates[team];
+      const msg = `Points: ${teamstate.points} | Units: ${teamstate.units.size}`;
+      // teamstate.units.forEach((unit) => {
+      //   msg += `| ${unit.id} (${unit.pos.x}, ${
+      //     unit.pos.y
+      //   }) cargo space: ${unit.getCargoSpaceLeft()}`;
+      // });
+      if (team === Unit.TEAM.A) {
+        console.log(msg.cyan);
+      } else {
+        console.log(msg.red);
+      }
+    }
+
+    await sleep(game.configs.debugDelay);
   }
 }

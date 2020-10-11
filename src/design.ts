@@ -1,6 +1,6 @@
-import {Design} from 'dimensions-ai/lib/main/Design';
-import {Match} from 'dimensions-ai/lib/main/Match';
-import {MatchEngine} from 'dimensions-ai/lib/main/MatchEngine';
+import { Design } from 'dimensions-ai/lib/main/Design';
+import { Match } from 'dimensions-ai/lib/main/Match';
+import { MatchEngine } from 'dimensions-ai/lib/main/MatchEngine';
 import { KingOfTheHillLogic } from './logic';
 import { AIMatchResults, State } from './types';
 import { Unit } from './Unit';

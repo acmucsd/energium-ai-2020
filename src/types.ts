@@ -21,9 +21,11 @@ export interface AIMatchConfigs {
   width: number;
   height: number;
   debug?: boolean;
+  debugDelay: number;
   seed: number | undefined;
   parameters: {
     UNIT_COST: number;
     MAX_TURNS: number;
+    INITIAL_POINTS: number;
   };
 }

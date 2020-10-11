@@ -27,6 +27,9 @@ export class Game {
   };
   constructor(public configs: AIMatchConfigs) {
     this.map = new GameMap(configs.width, configs.height);
+    Unit.ALL_TEAMS.forEach((team) => {
+      this.state.teamStates[team].points = configs.parameters.INITIAL_POINTS;
+    });
   }
 
   validateCommand(cmd: MatchEngine.Command): Action {
@@ -141,21 +144,22 @@ export class Game {
   }
 
   // spawn all units asked to be spawn
-  handleSpawnActions(actions: Array<SpawnAction>, match: Match): void {
-    const spawnedPositions: Set<number> = new Set();
+  handleSpawnActions(
+    actions: Array<SpawnAction>,
+    match: Match
+  ): Array<Position> {
+    const spawnedPositionsHashes: Set<number> = new Set();
+    const spawnedPositions: Array<Position> = [];
+
     const UNIT_COST = this.configs.parameters.UNIT_COST;
     actions.forEach((action) => {
       // check first if points available to use
       if (this.state.teamStates[action.team].points >= UNIT_COST) {
         this.spawnUnit(action.team, action.pos);
         this.state.teamStates[action.team].points -= UNIT_COST;
-        spawnedPositions.add(action.pos.hash());
-        if (spawnedPositions.has(action.pos.hash())) {
-          match.log.warn(
-            `Team ${
-              action.team
-            } Spawned more than once at ${action.pos.toString()}, all spawned units collided and will vanish`
-          );
+        if (!spawnedPositionsHashes.has(action.pos.hash())) {
+          spawnedPositionsHashes.add(action.pos.hash());
+          spawnedPositions.push(action.pos);
         }
       } else {
         match.log.warn(
@@ -163,6 +167,8 @@ export class Game {
         );
       }
     });
+
+    return spawnedPositions;
   }
   // move all units and then destroy any that collide
   handleMovementActions(actions: Array<MoveAction>, match: Match): void {
