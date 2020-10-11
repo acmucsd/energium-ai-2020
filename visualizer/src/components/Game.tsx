@@ -63,7 +63,6 @@ export const GameComponent = () => {
     main.renderFrame(turn);
     setFrame(main.frames[turn]);
   };
-  console.log("Hello");
   const handleUpload = () => {
     setUploading(true);
     if (fileInput.current.files.length) {

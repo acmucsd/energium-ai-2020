@@ -10,6 +10,7 @@ import {
   memorySizeOf,
 } from './utils';
 import { Position } from '@acmucsd/kingofthehill-2020/lib/es6/Tile/position';
+import { GameMap } from '@acmucsd/kingofthehill-2020/lib/es6/GameMap';
 
 export interface Frame {
   teamStates: FrameTeamStateData;
@@ -62,11 +63,16 @@ class MainScene extends Phaser.Scene {
       storeReplay: false,
       debug: false,
     },
-    throw: () => {},
+    throw: (id, err) => {
+      console.error(id, err);
+    },
     sendAll: () => {},
     send: () => {},
     log: {
       detail: () => {},
+      warn: (m) => {
+        console.log(m)
+      },
     },
     agents: [],
   };
@@ -107,25 +113,24 @@ class MainScene extends Phaser.Scene {
     this.currentSelectedTilePos = clickedPos;
   }
 
+  replayData: any;
   loadReplayData(replayData: any): void {
-    console.log(replayData)
+    this.replayData = replayData;
     this.kothgame = new Game(DEFAULT_CONFIGS);
+    
     let width = replayData.map[0].length;
     let height = replayData.map.length;
+    this.kothgame.map = new GameMap(width, height);
+    this.replayData.bases.forEach((b) => {
+      this.kothgame.map.setBase(b.team, b.x, b.y);
+    });
     const level = [];
-    // generate the ground
     for (let y = 0; y < height; y++) {
-      level.push(
-        replayData.map[y].map((data) => {
-          if (data.resource == null) {
-            let p = Math.random();
-            if (p > 0.7) return 2;
-            else return 3;
-          } else {
-            return 3;
-          }
-        })
-      );
+      for (let x = 0; x < width; x++) {
+        // this.kothgame.map.getTile(x, y).pointsPerTurn = replayData.map[y][x].ppt;
+        const pixels = mapPosToPixels(new Position(x, y))
+        this.add.text(pixels[0], pixels[1], replayData.map[y][x].ppt);
+      }
     }
     this.map = this.make.tilemap({
       data: level,
@@ -142,19 +147,8 @@ class MainScene extends Phaser.Scene {
       }
     );
     this.dynamicLayer = this.map
-      .createBlankDynamicLayer('resources', tileset)
+      .createBlankDynamicLayer('bases', tileset)
       .setScale(2);
-
-    for (let y = 0; y < height; y++) {
-      // level.push(
-      //   replayData.map[y].map((data, x) => {
-      //   })
-      // );
-    }
-
-    replayData.bases.forEach((b) => {
-      this.kothgame.map.setBase(b.team, b.x, b.y);
-    });
 
     this.cameras.main.setBounds(
       0,
@@ -164,15 +158,16 @@ class MainScene extends Phaser.Scene {
     );
 
     // load the initial state from replay
-    this.pseudomatch.configs.preLoadedGame = this.kothgame;
-    setTimeout(() => {
+    // this.pseudomatch.configs.preLoadedGame = this.kothgame;
+    this.pseudomatch.configs.seed = this.replayData.seed;
+    // setTimeout(() => {
       KingOfTheHillLogic.initialize(this.pseudomatch).then(() => {
         this.generateGameFrames(replayData).then(() => {
           this.renderFrame(0);
           this.game.events.emit('setup');
         });
       });
-    }, 1000);
+    // }, 1000);
   }
 
   /**
@@ -235,6 +230,7 @@ class MainScene extends Phaser.Scene {
     if (!f) {
       return;
     }
+    console.log(f);
 
     let visibleUnits: Set<number> = new Set();
     f.unitData.forEach((data) => {
@@ -255,6 +251,9 @@ class MainScene extends Phaser.Scene {
     if (this.currentSelectedTilePos !== null) {
       this.onTileClicked(this.currentSelectedTilePos);
     }
+    this.replayData.bases.forEach((b) => {
+      this.dynamicLayer.putTileAt(5, b.x, b.y, true);
+    });
   }
 
   async generateGameFrames(replayData) {
@@ -262,7 +261,6 @@ class MainScene extends Phaser.Scene {
       const commands = replayData.allCommands[this.currentTurn];
       const state: State = this.pseudomatch.state;
       const game = state.game;
-
       await KingOfTheHillLogic.update(this.pseudomatch, commands);
 
       [
@@ -300,6 +298,7 @@ class MainScene extends Phaser.Scene {
       this.frames.push(frame);
       this.currentTurn++;
     }
+    console.log(this.frames);
   }
   update(time: number, delta: number) {}
 }

@@ -161,7 +161,7 @@ export class KingOfTheHillLogic {
     });
     for (const unit of unitsToRemove) {
       match.log.warn(
-        `Team ${unit.team} spawned unit collided at ${unit.pos}`
+        `Team ${unit.team} spawned unit collided at ${unit.pos}; turn ${game.state.turn}`
       );
       game.destroyUnit(unit.team, unit.id);
     }
