@@ -15,6 +15,7 @@ import { GameMap } from '@acmucsd/kingofthehill-2020/lib/es6/GameMap';
 export interface Frame {
   teamStates: FrameTeamStateData;
   unitData: FrameUnitData;
+  errors: string[];
 }
 
 type FrameTeamStateData = {
@@ -57,6 +58,8 @@ class MainScene extends Phaser.Scene {
 
   frames: Array<Frame> = [];
 
+  currentTurnErrors: Array<string> = [];
+
   pseudomatch: any = {
     state: {},
     configs: {
@@ -64,14 +67,14 @@ class MainScene extends Phaser.Scene {
       debug: false,
     },
     throw: (id, err) => {
-      console.error(id, err);
+      this.currentTurnErrors.push(`Team ${id} - ${err}`);
     },
     sendAll: () => {},
     send: () => {},
     log: {
       detail: () => {},
       warn: (m) => {
-        console.log(m)
+        this.currentTurnErrors.push(m);
       },
     },
     agents: [],
@@ -199,6 +202,7 @@ class MainScene extends Phaser.Scene {
     return {
       unitData,
       teamStates,
+      errors: this.currentTurnErrors
     };
   }
 
@@ -258,6 +262,7 @@ class MainScene extends Phaser.Scene {
 
   async generateGameFrames(replayData) {
     while (this.currentTurn <= this.kothgame.configs.parameters.MAX_TURNS) {
+      this.currentTurnErrors = [];
       const commands = replayData.allCommands[this.currentTurn];
       const state: State = this.pseudomatch.state;
       const game = state.game;
