@@ -29,8 +29,13 @@ const run = async () => {
     debugDelay: 50,
     engineOptions: {
       noStdErr: false,
+      timeout: {
+        max: 1000,
+      }
     },
-    loggingLevel: Logger.LEVEL.ALL,
+    loggingLevel: Logger.LEVEL.DETAIL,
   });
+  let res = await match.run();
+  console.log(res);
 };
 run();

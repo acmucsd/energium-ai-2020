@@ -109,6 +109,7 @@ export class KingOfTheHillLogic {
       // FRONTEND needs to pass in psuedo isTerminated() function that returns true on the turn an agent terminated itself
       if (agent.isTerminated()) {
         agentsTerminated[agent.id] = true;
+        match.log.warn(agent.id, `was prematurely terminated due to bug`);
         game.state.teamStates[agent.id].points = 0;
       }
     });
@@ -139,9 +140,17 @@ export class KingOfTheHillLogic {
     game.handleSpawnActions(actionsMap.get(Game.ACTIONS.CREATE_UNIT) as SpawnAction[], match);
     game.handleMovementActions(actionsMap.get(Game.ACTIONS.MOVE) as MoveAction[], match);
     game.handlePointsRelease();
+    if (this.gameOver(game)) {
+      return Match.Status.FINISHED;
+    }
     await this.sendAllAgentsGameInformation(match);
-
-    return Match.Status.FINISHED;
+    await match.sendAll('D_DONE');
+    game.state.turn++;
   }
-  static async getResults(match: Match): Promise<void> {}
+  static gameOver(game: Game) {
+    if (game.state.turn >= game.configs.parameters.MAX_TURNS) {
+      return true;
+    }
+    return false;
+  }
 }
