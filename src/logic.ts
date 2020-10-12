@@ -140,32 +140,20 @@ export class KingOfTheHillLogic {
         match.throw(agentID, err);
       }
     }
-    const spawnedPositions = game.handleSpawnActions(
+    const spawnedTilesSet = game.handleSpawnActions(
       actionsMap.get(Game.ACTIONS.CREATE_UNIT) as SpawnAction[],
       match
     );
-    game.handleMovementActions(
+    const movedTilesSet = game.handleMovementActions(
       actionsMap.get(Game.ACTIONS.MOVE) as MoveAction[],
       match
     );
-
-    // remove any units that collided because they spawned into a taken tile. remove units with higher breakdown and if tied, all get removed
-    const unitsToRemove: Array<Unit> = [];
-    spawnedPositions.forEach((pos) => {
-      const tile = game.map.getTileByPos(pos);
-      if (tile.units.size > 1) {
-        tile.units.forEach((unit) => {
-          unitsToRemove.push(unit);
-        });
-      }
-    });
-    for (const unit of unitsToRemove) {
-      match.log.warn(
-        `Team ${unit.team} spawned unit collided at ${unit.pos}; turn ${game.state.turn}`
-      );
-      game.destroyUnit(unit.team, unit.id);
-    }
+    const tiles = [...Array.from(spawnedTilesSet.values()), ...Array.from(movedTilesSet.values())]
+   
+    game.handleCollisions(tiles, match)
     game.handlePointsRelease();
+    game.handleRepairs();
+    game.handleBreakdown(match);
 
     if (state.configs.debug) {
       await this.debugViewer(game);

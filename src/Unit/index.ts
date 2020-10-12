@@ -1,13 +1,18 @@
 import { Position } from '../Tile/position';
 
 export class Unit {
-  /** How broken down the unit is. past max, the unit should vanish */
-  public breakdownLevel = 0;
+  
+  // last turn this collector unit was repaired;
+  public lastRepairTurn = 0;
   constructor(
     public team: Unit.TEAM,
     public id: number,
     public pos: Position
   ) {}
+  /** How broken down the unit is. past max, the unit should vanish */
+  getBreakdownLevel(turn: number, breakdownRate: number): number {
+    return Math.floor(turn - this.lastRepairTurn) / breakdownRate;
+  }
 }
 export namespace Unit {
   export enum TEAM {
