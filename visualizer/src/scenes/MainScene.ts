@@ -37,11 +37,9 @@ export interface FrameSingleUnitData {
 
 export type GameCreationConfigs = {
   replayData: object;
-  handleUnitClicked: HandleUnitClicked;
   handleTileClicked: HandleTileClicked;
 };
 
-type HandleUnitClicked = (unit: FrameSingleUnitData) => void;
 export type FrameTileData = {
   pos: Position;
   units: Map<number, FrameSingleUnitData>;
@@ -95,14 +93,9 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.tilemapTiledJSON('map', 'assets/tilemaps/desert.json');
-    this.load.image('Desert', 'assets/tilemaps/tmw_desert_spacing.png');
     this.load.image('space', 'assets/tilemaps/kothtiles.png');
     this.load.image('worker0', 'assets/sprites/worker0.png');
     this.load.image('worker1', 'assets/sprites/worker1.png');
-    this.load.image('cart0', 'assets/sprites/cart0.png');
-    this.load.image('cart1', 'assets/sprites/cart1.png');
-    this.load.image('player', 'assets/sprites/mushroom.png');
   }
 
   private onTileClicked(v: Position) {
@@ -251,7 +244,6 @@ class MainScene extends Phaser.Scene {
 
   public turn = 0;
 
-  public handleUnitClicked: HandleUnitClicked;
   public handleTileClicked: HandleTileClicked;
 
   public currentSelectedTilePos: Position = null;
@@ -259,7 +251,6 @@ class MainScene extends Phaser.Scene {
   create(configs: GameCreationConfigs) {
     console.log(configs);
     this.loadReplayData(configs.replayData);
-    this.handleUnitClicked = configs.handleUnitClicked;
     this.handleTileClicked = configs.handleTileClicked;
     this.events.emit('created');
   }
@@ -277,8 +268,6 @@ class MainScene extends Phaser.Scene {
     if (!f) {
       return;
     }
-    console.log(f);
-
     let visibleUnits: Set<number> = new Set();
     f.unitData.forEach((data) => {
       const id = data.id;
@@ -306,6 +295,7 @@ class MainScene extends Phaser.Scene {
       this.dynamicLayer.putTileAt(n, b.x, b.y, true);
     });
   }
+
 
   async generateGameFrames(replayData) {
     while (this.currentTurn <= this.kothgame.configs.parameters.MAX_TURNS) {

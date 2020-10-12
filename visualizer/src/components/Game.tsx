@@ -16,7 +16,11 @@ import {
   Grid,
   Checkbox,
   FormControlLabel,
+  ThemeProvider,
+  createMuiTheme,
 } from '@material-ui/core';
+import red from '@material-ui/core/colors/red';
+
 import './styles.css';
 import { AIMatchConfigs, Unit } from '@acmucsd/energium-2020';
 import TileStats from './TileStats';
@@ -27,6 +31,8 @@ export const GameComponent = () => {
   const [game, setGame] = useState<Phaser.Game>(null);
   const [main, setMain] = useState<MainScene>(null);
   const [configs, setConfigs] = useState<AIMatchConfigs>(null);
+  const [running, setRunning] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [sliderConfigs, setSliderConfigs] = useState({
     step: 1,
     min: 0,
@@ -37,7 +43,7 @@ export const GameComponent = () => {
       game.events.on('setup', () => {
         const main: MainScene = game.scene.scenes[0];
         setMain(main);
-        const configs = main.kothgame.configs;
+        const configs = main.pseudomatch.state.game.configs;
         setConfigs(configs);
 
         setSliderConfigs({
@@ -66,6 +72,36 @@ export const GameComponent = () => {
     main.renderFrame(turn);
     setFrame(main.frames[turn]);
   };
+  useEffect(() => {
+    if (running) {
+      let currTurn = turn;
+      const interval = setInterval(() => {
+        if (currTurn >= configs.parameters.MAX_TURNS) {
+          setRunning(false);
+          return;
+        }
+        moveToTurn(currTurn);
+        currTurn += 1;
+        setTurn(currTurn);
+        
+      }, 1000 / playbackSpeed);
+      return () => clearInterval(interval);
+    }
+  }, [running, playbackSpeed]);
+
+  const setNewGame = (replayData: any) => {
+    if (game) {
+      game.destroy(true, false);
+    }
+    setReady(false);
+
+    const newgame = createGame({
+      replayData,
+      handleTileClicked,
+    });
+    setGame(newgame);
+    setUploading(false);
+  }
   const handleUpload = () => {
     setUploading(true);
     if (fileInput.current.files.length) {
@@ -77,53 +113,21 @@ export const GameComponent = () => {
           .text()
           .then(JSON.parse)
           .then((data) => {
-            if (game) {
-              game.destroy(true, false);
-            }
-            setReady(false);
-
-            const newgame = createGame({
-              replayData: data,
-              handleUnitClicked,
-              handleTileClicked,
-            });
-            setGame(newgame);
-            setUploading(false);
+            setNewGame(data);
           });
       } else {
         const unzip = new jszip();
-        // file.arrayBuffer()
-        //   .then(unzip.loadAsync)
-        //   .then((data) => {
-        //     console.log(data.files);
-        //   })
         unzip.loadAsync(file).then((data) => {
           Object.values(data.files).forEach((info) => {
             console.log(info);
             if (info.dir === false) {
               info.async('string').then((json) => {
-                let gameData = JSON.parse(json);
-                if (game) {
-                  game.destroy(true, false);
-                }
-                setReady(false);
-    
-                const newgame = createGame({
-                  replayData: gameData,
-                  handleUnitClicked,
-                  handleTileClicked,
-                });
-                setGame(newgame);
-                setUploading(false);
+                let replayData = JSON.parse(json);
+                setNewGame(replayData);
               });
             }
           });
         });
-        // unzip.loadAsync(fs.readFileSync(this.replayFilePath)).then((data) => {
-        //   data.file(this.replayFilePath).async("string").then((data) => {
-        //     console.log(data)
-        //   })
-        // });
       }
     }
   };
@@ -145,19 +149,26 @@ export const GameComponent = () => {
   const gameLoading =
     (uploading && game === null) || (!isReady && game !== null);
 
-  const handleUnitClicked = (data) => {
-    console.log(data);
-  };
-  const handleTileClicked = (data) => {
+  const handleTileClicked = (data: FrameTileData) => {
     setTileData(data);
   };
   const handleTextOverlayCheckChange = () => {
     main.toggleTextOverlay();
   }
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: red[400],
+      }
+    }
+  });
   return (
     <div className="Game">
       <div className="gameContainer">
-        <h1>King of the Hill AI Challenge</h1>
+        <h1>Energium AI Competition</h1>
+        <p className="link"><a href="https://ai.acmucsd.com/competitions" target="_blank" rel="noopener noreferrer">By ACM AI Competitions</a></p>
+        <ThemeProvider theme={theme}>
+
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Card
@@ -170,6 +181,24 @@ export const GameComponent = () => {
                 {noUpload && renderUploadButton()}
                 {gameLoading && <CircularProgress />}
                 <div id="content"></div>
+                <div className="play-buttons">
+                  <Button className="play" color="primary" variant="contained" disabled={!isReady} onClick={() => {
+                    setRunning(!running)
+                  }}>
+                    {running ? 'Pause' : 'Play'}
+                  </Button>
+                  <ButtonGroup disabled={!isReady}>
+                    {[1, 2, 4, 8, 16].map((speed) => {
+                      const variant = playbackSpeed === speed ? "contained" : "outlined";
+                      return <Button color="primary" variant={variant} onClick={() => {
+                        setPlaybackSpeed(speed);
+                      }}>
+                      {speed}x
+                      </Button>
+                    })}
+                  </ButtonGroup>
+                </div>
+                <br />
                 <Slider
                   value={turn}
                   disabled={!isReady}
@@ -183,7 +212,9 @@ export const GameComponent = () => {
                   <Button
                     disabled={!isReady}
                     onClick={() => {
-                      moveToTurn(turn - 1);
+                      if (turn > 0) {
+                        moveToTurn(turn - 1);
+                      }
                     }}
                   >
                     {'<'}
@@ -191,12 +222,15 @@ export const GameComponent = () => {
                   <Button
                     disabled={!isReady}
                     onClick={() => {
-                      moveToTurn(turn + 1);
+                      if (turn < configs.parameters.MAX_TURNS) {
+                        moveToTurn(turn + 1);
+                      }
                     }}
                   >
                     {'>'}
                   </Button>
                 </ButtonGroup>
+                
                 <br />
                 <FormControlLabel
                   value="Toggle Energium Values Overlay"
@@ -242,6 +276,7 @@ export const GameComponent = () => {
             {!noUpload && renderUploadButton()}
           </Grid>
         </Grid>
+        </ThemeProvider>
       </div>
     </div>
   );

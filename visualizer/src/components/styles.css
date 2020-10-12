@@ -1,11 +1,21 @@
 .Game .gameContainer {
   padding: 4rem;
 }
-
+.Game .play-buttons {
+  margin-top: 1rem;
+}
+.Game .play-buttons .play {
+  margin-right: 1rem;
+  vertical-align: top;
+}
 .Game .gameContainer .phaser-wrapper {
   /* height: 640px; */
 }
 
 .Game .gameContainer .phaser-wrapper.Loading #content {
   display: none;
+}
+.Game .link a{
+  color:#ef5350;
+  text-decoration: none;
 }
