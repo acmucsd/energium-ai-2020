@@ -36,7 +36,7 @@ export interface FrameSingleUnitData {
 }
 
 export type GameCreationConfigs = {
-  replayData: object;
+  replayData: any;
   handleTileClicked: HandleTileClicked;
 };
 
