@@ -4,7 +4,9 @@ Upon the dawn of the new millenium, energy has become currency, the most preciou
 
 But time is of the essence, and these robots need an AI to help them run effectively and mine as much energium possible before time runs out. What makes matters worse is, there's always a rival corporation on the same asteroid for some reason, trying to mine the resources too. Your goal is to build the best AI agent to control these collectors and get more energy than your competitors. Also, for some reason in 1000 years, Javascript, Python, and Java continue to be prevalent langauges for AI.
 
-See [Getting Started](#Getting-Started)
+See [Getting Started](#Getting-Started) to start programming and uploading a bot to compete against others! See [Specs](#Specs) for details on how the competition works, and how to develop your bot.
+
+The live competition can be found here: https://ai.acmucsd.com/competitions
 
 ## Getting Started
 
@@ -53,5 +55,23 @@ Collectors automatically gain or lose energium depending on the `energium` value
 
 Bases have the ability to spend Energium to produce more **collector** bots on top of the base to help your corporation mine even more Energium. Caution that if there is a collector already on top of a base, any new collector spawned will either break the existing collector or both collectors will break!
 
-## 
+## Packages Available and Versions Used
 
+On the competition servers, we are using:
+
+Node version 12.?
+
+Python 3.?
+
+Java ?
+
+On the competition servers, the following packages are provided for use
+
+For Python Bots:
+`scipy`, `numpy`, `pandas`, `scikit-learn`
+
+## FAQ
+
+Please join our competition discord for questions, help with bugs, installation, or general strategy talk!
+
+https://discord.gg/XsG5etY
