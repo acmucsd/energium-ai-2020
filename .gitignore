@@ -14,3 +14,4 @@ tests/bots
 
 server/keys
 server/.env
+dist

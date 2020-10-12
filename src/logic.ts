@@ -119,7 +119,8 @@ export class KingOfTheHillLogic {
     });
     // if agent terminated, set all terminated agents scores to 0
     if (agentsTerminated[0] || agentsTerminated[1]) {
-      return Match.Status.FINISHED;
+      // using literal here so wepback doesn't import Match package
+      return 'finished' as Match.Status.FINISHED;
     }
 
     // loop over commands and validate and map into internal action representations
@@ -160,7 +161,7 @@ export class KingOfTheHillLogic {
     });
     for (const unit of unitsToRemove) {
       match.log.warn(
-        `Team ${unit.team} spawned unit collided at ${unit.pos}`
+        `Team ${unit.team} spawned unit collided at ${unit.pos}; turn ${game.state.turn}`
       );
       game.destroyUnit(unit.team, unit.id);
     }
@@ -174,7 +175,7 @@ export class KingOfTheHillLogic {
       if (game.replay) {
         game.replay.writeOut();
       }
-      return Match.Status.FINISHED;
+      return 'finished' as Match.Status.FINISHED;
     }
     await this.sendAllAgentsGameInformation(match);
     await match.sendAll('D_DONE');
@@ -194,11 +195,6 @@ export class KingOfTheHillLogic {
     for (const team of teams) {
       const teamstate = game.state.teamStates[team];
       const msg = `Points: ${teamstate.points} | Units: ${teamstate.units.size}`;
-      // teamstate.units.forEach((unit) => {
-      //   msg += `| ${unit.id} (${unit.pos.x}, ${
-      //     unit.pos.y
-      //   }) cargo space: ${unit.getCargoSpaceLeft()}`;
-      // });
       if (team === Unit.TEAM.A) {
         console.log(msg.cyan);
       } else {

@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"jsx": "react",
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true
+	},
+	"include": [
+		"src/**/*"
+	],
+}

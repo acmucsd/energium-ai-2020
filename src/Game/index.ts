@@ -164,7 +164,7 @@ export class Game {
         }
       } else {
         match.log.warn(
-          `Team ${action.team} does not have enough points to spawn another unit`
+          `Team ${action.team} does not have enough points to spawn another unit; turn ${this.state.turn}`
         );
       }
     });
@@ -178,7 +178,7 @@ export class Game {
     actions.forEach((action) => {
       if (idsOfUnitsThatMoved.has(action.unitid)) {
         match.log.warn(
-          `Team ${action.team}'s unit ${action.unitid} already moved, cannot move again this turn`
+          `Team ${action.team}'s unit ${action.unitid} already moved, cannot move again this turn; turn ${this.state.turn}`
         );
       } else {
         this.moveUnit(action.team, action.unitid, action.direction);
@@ -193,7 +193,7 @@ export class Game {
     tilesWithNewUnits.forEach((tile) => {
       if (tile.units.size > 1) {
         // remove all units as they collided
-        match.log.warn(`${tile.units.size} units collided at ${tile.pos}`);
+        match.log.warn(`${tile.units.size} units collided at ${tile.pos}; turn ${this.state.turn}`);
         tile.units.forEach((unit) => {
           unitsToRemove.push(unit);
         });
