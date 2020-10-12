@@ -62,7 +62,10 @@ export class Replay {
     if (this.compressReplay) {
       const zipper = new JSZip();
       zipper.file(this.replayFilePath, JSON.stringify(this.data));
-      zipper.generateAsync({ type: 'nodebuffer' }).then((content) => {
+      zipper.generateAsync({ type: 'nodebuffer',  compression: "DEFLATE",
+      compressionOptions: {
+          level: 9
+      }}).then((content) => {
         fs.appendFileSync(this.replayFilePath, content);
       });
     } else {

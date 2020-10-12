@@ -26,6 +26,7 @@ const run = async () => {
     storeReplay: true,
     debug: false,
     debugDelay: 50,
+    compressReplay: true,
     engineOptions: {
       noStdErr: false,
       timeout: {

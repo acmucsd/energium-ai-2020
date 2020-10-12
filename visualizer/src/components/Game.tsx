@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
 import MainScene, { Frame, FrameTileData } from '../scenes/MainScene';
 import { createGame } from '../game';
+import jszip from 'jszip';
 import PlayerStats from './PlayerStats';
 import GameStats from './GameStats';
 import {
@@ -89,6 +90,40 @@ export const GameComponent = () => {
             setGame(newgame);
             setUploading(false);
           });
+      } else {
+        const unzip = new jszip();
+        // file.arrayBuffer()
+        //   .then(unzip.loadAsync)
+        //   .then((data) => {
+        //     console.log(data.files);
+        //   })
+        unzip.loadAsync(file).then((data) => {
+          Object.values(data.files).forEach((info) => {
+            console.log(info);
+            if (info.dir === false) {
+              info.async('string').then((json) => {
+                let gameData = JSON.parse(json);
+                if (game) {
+                  game.destroy(true, false);
+                }
+                setReady(false);
+    
+                const newgame = createGame({
+                  replayData: gameData,
+                  handleUnitClicked,
+                  handleTileClicked,
+                });
+                setGame(newgame);
+                setUploading(false);
+              });
+            }
+          });
+        });
+        // unzip.loadAsync(fs.readFileSync(this.replayFilePath)).then((data) => {
+        //   data.file(this.replayFilePath).async("string").then((data) => {
+        //     console.log(data)
+        //   })
+        // });
       }
     }
   };
@@ -164,12 +199,12 @@ export const GameComponent = () => {
                 </ButtonGroup>
                 <br />
                 <FormControlLabel
-                  value="Toggle Points Overlay"
+                  value="Toggle Energium Values Overlay"
                   control={<Checkbox 
                     onChange={handleTextOverlayCheckChange}
                   />}
                   disabled={!isReady}
-                  label="Toggle Points Overlay"
+                  label="Toggle Energium Values Overlay"
                   labelPlacement='end'
                 />
                 
@@ -196,6 +231,10 @@ export const GameComponent = () => {
                       />
                     );
                   })}
+                {currentFrame !== null && <p>{currentFrame.errors.length} warnings / events this turn </p>}
+                {currentFrame !== null && currentFrame.errors.map((m) => {
+                  return <p>{m}</p>
+                })}
               </CardContent>
             </Card>
           </Grid>
