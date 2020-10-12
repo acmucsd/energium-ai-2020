@@ -1,3 +1,6 @@
 .TileStats {
   margin-bottom: 2rem;
 }
+.TileStats .UnitStats {
+  margin-bottom: 2rem;
+}
