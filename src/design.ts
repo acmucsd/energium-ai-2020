@@ -25,7 +25,9 @@ export class EnergiumDesign extends Design {
     let teamAPts = game.state.teamStates[Unit.TEAM.A].points;
     let teamBPts = game.state.teamStates[Unit.TEAM.B].points;
 
-    if (match.agents[Unit.TEAM.A].isTerminated()) {
+    let aterm = match.agents[Unit.TEAM.A].isTerminated();
+    let bterm = match.agents[Unit.TEAM.B].isTerminated()
+    if (aterm) {
       teamAPts = 0;
     }
     if (match.agents[Unit.TEAM.B].isTerminated()) {
@@ -48,11 +50,18 @@ export class EnergiumDesign extends Design {
         turnsElapsed: game.state.turn,
       },
     };
-
-    if (teamBPts > teamAPts) {
+    if (aterm && !bterm) {
       winningTeam = Unit.TEAM.B;
       losingTeam = Unit.TEAM.A;
-    } else if (teamBPts === teamAPts) {
+    }
+    else if (!aterm && bterm) {
+      winningTeam = Unit.TEAM.A;
+      losingTeam = Unit.TEAM.B;
+    }
+    else if (teamBPts > teamAPts) {
+      winningTeam = Unit.TEAM.B;
+      losingTeam = Unit.TEAM.A;
+    } else if ((aterm && bterm) || (teamBPts === teamAPts)) {
       // a tie
       return {
         ranks: [

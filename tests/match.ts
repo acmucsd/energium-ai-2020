@@ -14,10 +14,10 @@ const kdim = create(design, {
 });
 
 const js = './kits/js/bot.js';
-
+const goodjs = './tests/bots/js1/bot.js';
 const botList = [
   { file: js, name: 'js' },
-  { file: js, name: 'js2' },
+  { file: goodjs, name: 'goodjs' },
 ];
 
 const run = async () => {
