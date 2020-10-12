@@ -16,7 +16,7 @@ export class KingOfTheHillDesign extends Design {
   ): Promise<Match.Status> {
     return KingOfTheHillLogic.update(match, commands);
   }
-  
+
   async getResults(match: Match): Promise<AIMatchResults> {
     const state: State = match.state;
     const game = state.game;
@@ -36,14 +36,14 @@ export class KingOfTheHillDesign extends Design {
       stats: {
         [Unit.TEAM.A]: {
           points: teamAPts,
-          terminated: match.agents[Unit.TEAM.A].isTerminated()
+          terminated: match.agents[Unit.TEAM.A].isTerminated(),
         },
         [Unit.TEAM.B]: {
           points: teamBPts,
-          terminated: match.agents[Unit.TEAM.B].isTerminated()
+          terminated: match.agents[Unit.TEAM.B].isTerminated(),
         },
         seed: state.configs.seed,
-        turnsElapsed: game.state.turn
+        turnsElapsed: game.state.turn,
       },
     };
 
@@ -80,9 +80,7 @@ export class KingOfTheHillDesign extends Design {
       ...otherData,
     };
   }
-  static resultHandler(
-    results: AIMatchResults
-  ): Tournament.RankSystem.Results {
+  static resultHandler(results: AIMatchResults): Tournament.RankSystem.Results {
     const rankings = [];
     for (let i = 0; i < results.ranks.length; i++) {
       const info = results.ranks[i];

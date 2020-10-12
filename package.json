@@ -34,13 +34,15 @@
   "sideEffects": false,
   "homepage": "https://github.com/acmucsd/fall2020-ai-comp#readme",
   "dependencies": {
+    "@types/jszip": "^3.4.1",
     "colors": "^1.4.0",
     "dimensions-ai": "^4.6.4",
+    "jszip": "^3.5.0",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
-    "esm": "^3.2.25",
     "eslint": "^7.11.0",
+    "esm": "^3.2.25",
     "prettier": "^2.1.2",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"

@@ -24,6 +24,7 @@ export class GameMap {
       team,
     });
     this.getTile(x, y).baseTeam = team;
+    this.getTile(x, y).pointsPerTurn = 0;
   }
   inMap(pos: Position): boolean {
     return !(
@@ -86,22 +87,19 @@ export class GameMap {
                   }
                 });
                 return unitstr;
-              } 
-            }
-            else if (tile.isBaseTile()) {
+              }
+            } else if (tile.isBaseTile()) {
               if (tile.baseTeam === Unit.TEAM.A) {
                 return `▩`.cyan;
               } else {
                 return `▩`.red;
               }
-            }
-            else {
+            } else {
               if (tile.pointsPerTurn > 0) {
                 return `${tile.pointsPerTurn}`.green;
               } else if (tile.pointsPerTurn < 0) {
                 return `${Math.abs(tile.pointsPerTurn)}`.red;
-              }
-              else {
+              } else {
                 return '0'.gray;
               }
             }

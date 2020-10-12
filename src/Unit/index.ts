@@ -1,7 +1,6 @@
 import { Position } from '../Tile/position';
 
 export class Unit {
-  
   // last turn this collector unit was repaired;
   public lastRepairTurn = 0;
   constructor(

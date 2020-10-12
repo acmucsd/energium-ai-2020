@@ -97,7 +97,6 @@ export class Game {
             // check if tile being built is a owned base
             const tile = this.map.getTile(x, y);
             if (!tile.isBaseTile() || tile.baseTeam !== team) {
-              // invalid if not a city or not owned
               valid = false;
               errormsg = `Team ${cmd.agentID} tried to build unit on tile (${x}, ${y}) that does not have a base or is not owned`;
               break;
@@ -145,10 +144,7 @@ export class Game {
   }
 
   // spawn all units asked to be spawn
-  handleSpawnActions(
-    actions: Array<SpawnAction>,
-    match: Match
-  ): Set<Tile> {
+  handleSpawnActions(actions: Array<SpawnAction>, match: Match): Set<Tile> {
     const spawnedPositionsHashes: Set<number> = new Set();
     const spawnedPositions: Set<Tile> = new Set();
 
@@ -193,7 +189,7 @@ export class Game {
   }
 
   handleCollisions(tilesToCheck: Set<Tile>, match: Match): void {
-    const unitsToRemove: Array<{unit: Unit, tile: Tile}> = [];
+    const unitsToRemove: Array<{ unit: Unit; tile: Tile }> = [];
     tilesToCheck.forEach((tile) => {
       if (tile.units.size > 1) {
         // find lowest brokendown unit
@@ -201,7 +197,10 @@ export class Game {
         let lowestBreakdown = 999999;
         let lowestBreakdownUnits = 1;
         tile.units.forEach((unit) => {
-          const b = unit.getBreakdownLevel(this.state.turn, this.configs.parameters.BREAKDOWN_TURNS);
+          const b = unit.getBreakdownLevel(
+            this.state.turn,
+            this.configs.parameters.BREAKDOWN_TURNS
+          );
           if (b < lowestBreakdown) {
             lowestBreakdown = b;
             lowestBreakdownUnits = 1;
@@ -212,18 +211,25 @@ export class Game {
         tile.units.forEach((unit) => {
           if (lowestBreakdownUnits > 1) {
             // all get removed
-            unitsToRemove.push({unit, tile});
+            unitsToRemove.push({ unit, tile });
           } else {
-            const b = unit.getBreakdownLevel(this.state.turn, this.configs.parameters.BREAKDOWN_TURNS);
+            const b = unit.getBreakdownLevel(
+              this.state.turn,
+              this.configs.parameters.BREAKDOWN_TURNS
+            );
             if (b > lowestBreakdown) {
-              unitsToRemove.push({unit, tile});
+              unitsToRemove.push({ unit, tile });
             }
           }
         });
       }
     });
-    for (const {unit, tile} of unitsToRemove) {
-      match.log.warn(`Team ${unit.team}'s unit ${unit.id} collided at ${tile.pos.toString()} on turn ${this.state.turn}`);
+    for (const { unit, tile } of unitsToRemove) {
+      match.log.warn(
+        `Team ${unit.team}'s unit ${
+          unit.id
+        } collided at ${tile.pos.toString()} on turn ${this.state.turn}`
+      );
       this.destroyUnit(unit.team, unit.id);
     }
   }
@@ -254,7 +260,10 @@ export class Game {
     Unit.ALL_TEAMS.forEach((team) => {
       const units = this.getTeamsUnits(team);
       units.forEach((unit) => {
-        const b = unit.getBreakdownLevel(this.state.turn, this.configs.parameters.BREAKDOWN_TURNS);
+        const b = unit.getBreakdownLevel(
+          this.state.turn,
+          this.configs.parameters.BREAKDOWN_TURNS
+        );
         if (b >= this.configs.parameters.BREAKDOWN_MAX) {
           brokenDownUnits.push(unit);
         }

@@ -20,14 +20,14 @@ export class KingOfTheHillLogic {
     state.configs = deepMerge(state.configs, match.configs);
     let rng = Math.random;
     if (state.configs.seed === undefined) {
-      state.configs.seed = Math.floor(Math.random() * 10E8);
+      state.configs.seed = Math.floor(Math.random() * 10e8);
     }
     rng = seedrandom(`${state.configs.seed}`);
     let game: Game;
     game = generateGame(state.configs, rng);
     state.game = game;
     if (state.configs.storeReplay) {
-      game.replay = new Replay(match);
+      game.replay = new Replay(match, game.configs.compressReplay);
     }
     match.log.detail(state.configs);
     // store the state into the match so it can be used again in `update` and `getResults`
@@ -93,7 +93,9 @@ export class KingOfTheHillLogic {
       const units = game.state.teamStates[team].units;
       units.forEach((unit) => {
         promises.push(
-          match.sendAll(`u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y} ${unit.lastRepairTurn}`)
+          match.sendAll(
+            `u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y} ${unit.lastRepairTurn}`
+          )
         );
       });
     });
@@ -149,12 +151,15 @@ export class KingOfTheHillLogic {
       actionsMap.get(Game.ACTIONS.MOVE) as MoveAction[],
       match
     );
-    const tiles = [...Array.from(spawnedTilesSet.values()), ...Array.from(movedTilesSet.values())]
+    const tiles = [
+      ...Array.from(spawnedTilesSet.values()),
+      ...Array.from(movedTilesSet.values()),
+    ];
     const tilesSet: Set<Tile> = new Set();
     tiles.forEach((tile) => {
       tilesSet.add(tile);
     });
-    game.handleCollisions(tilesSet, match)
+    game.handleCollisions(tilesSet, match);
     game.handlePointsRelease();
     game.handleRepairs();
     game.handleBreakdown(match);

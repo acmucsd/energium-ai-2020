@@ -22,6 +22,7 @@ export interface AIMatchConfigs {
   debug?: boolean;
   debugDelay: number;
   seed: number | undefined;
+  compressReplay: boolean;
   parameters: {
     UNIT_COST: number;
     MAX_TURNS: number;

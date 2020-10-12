@@ -1,4 +1,5 @@
 import { Match } from 'dimensions-ai/lib/main/Match';
+import JSZip from 'jszip';
 import { MatchEngine } from 'dimensions-ai/lib/main/MatchEngine';
 import fs from 'fs';
 import path from 'path';
@@ -22,9 +23,14 @@ export class Replay {
     bases: [],
     allCommands: [],
   };
-  constructor(match: Match) {
+  constructor(match: Match, public compressReplay: boolean) {
     const d = new Date().valueOf();
-    const replayFileName = `${d}_${match.id}.replay`;
+    let replayFileName = `${d}_${match.id}`;
+    if (compressReplay) {
+      replayFileName += '.replay';
+    } else {
+      replayFileName += '.json';
+    }
     this.replayFilePath = path.join(
       match.configs.storeReplayDirectory,
       replayFileName
@@ -53,6 +59,14 @@ export class Replay {
     });
   }
   public writeOut(): void {
-    fs.appendFileSync(this.replayFilePath, JSON.stringify(this.data));
+    if (this.compressReplay) {
+      const zipper = new JSZip();
+      zipper.file(this.replayFilePath, JSON.stringify(this.data));
+      zipper.generateAsync({ type: 'nodebuffer' }).then((content) => {
+        fs.appendFileSync(this.replayFilePath, content);
+      });
+    } else {
+      fs.appendFileSync(this.replayFilePath, JSON.stringify(this.data));
+    }
   }
 }
