@@ -168,6 +168,7 @@ export const GameComponent = () => {
                   control={<Checkbox 
                     onChange={handleTextOverlayCheckChange}
                   />}
+                  disabled={!isReady}
                   label="Toggle Points Overlay"
                   labelPlacement='end'
                 />

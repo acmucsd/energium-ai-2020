@@ -45,6 +45,7 @@ type HandleUnitClicked = (unit: FrameSingleUnitData) => void;
 export type FrameTileData = {
   pos: Position;
   units: Map<number, FrameSingleUnitData>;
+  pointsPerTurn: number;
 };
 type HandleTileClicked = (data: FrameTileData) => void;
 
@@ -117,6 +118,7 @@ class MainScene extends Phaser.Scene {
     this.handleTileClicked({
       pos: clickedPos,
       units: unitDataAtXY,
+      pointsPerTurn: this.replayData.map[v.y][v.x].ppt
     });
     this.currentSelectedTilePos = clickedPos;
   }

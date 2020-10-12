@@ -4,20 +4,11 @@ import { DEFAULT_CONFIGS } from '../defaults';
 import { GameMap } from '../GameMap';
 import { AIMatchConfigs } from '../types';
 
-const sizes = [12, 16, 24, 36];
+const sizes = [16, 20, 24, 28, 32];
 
 export const generateGame = (configs: AIMatchConfigs, rng: () => number) => {
   const game: Game = new Game(configs);
   game.rng = rng;
-
-  // game.map.getTile(0, 0).pointsPerTurn = 4;
-  // game.map.getTile(15, 0).pointsPerTurn = 4;
-  // game.map.getTile(8, 0).pointsPerTurn = 4;
-  // game.map.getTile(7, 0).pointsPerTurn = 4;
-  // game.map.getTile(6, 0).pointsPerTurn = -4;
-  // game.map.getTile(9, 0).pointsPerTurn = -4;
-  // game.map.setBase(0, 1, 1);
-  // game.map.setBase(1, 14, 1);
   generateRandomMap(game);
   return game;
 };
@@ -105,7 +96,12 @@ export const generateRandomMap = (game: Game) => {
       // lean towards outputting positives
       let p = game.rng() - 0.30;
       const sgn = Math.sign(p);
-      gaussianMap[y][x] = sgn * gaussian(p, 0.45, 0) * 0.5;
+      if (game.rng() < 0.95) {
+        gaussianMap[y][x] = 0;
+      }
+      else {
+        gaussianMap[y][x] = sgn * gaussian(p, 0.30, 0) * 0.5;
+      }
     }
   }
 
@@ -135,7 +131,7 @@ export const generateRandomMap = (game: Game) => {
   game.map = new GameMap(mapWidth, mapHeight);
   for (let y = 0; y < game.map.height; y++) {
     for (let x = 0; x < game.map.width; x++) {
-      game.map.getTile(x, y).pointsPerTurn = Math.round(convolved[y][x]);
+      game.map.getTile(x, y).pointsPerTurn = Math.floor(convolved[y][x]);
     }
   }
 
@@ -180,7 +176,7 @@ export const generateRandomMap = (game: Game) => {
     }
   }
 
-  console.log(game.map.getMapString());
+  // console.log(game.map.getMapString());
 }
-// generateGame(DEFAULT_CONFIGS, Math.rarn);
+// generateGame(DEFAULT_CONFIGS, Math.random);
 
