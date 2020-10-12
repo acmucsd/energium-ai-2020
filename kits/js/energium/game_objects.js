@@ -12,7 +12,7 @@ const GAME_CONSTANTS = require("./game_constants");
 class Player {
   constructor(teamid) {
     this.team = teamid;
-    this.points = 0;
+    this.energium = 0;
     /** array of all units */
     this.units = [];
     /** arrrary of all bases */

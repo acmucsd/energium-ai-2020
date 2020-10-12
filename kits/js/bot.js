@@ -1,5 +1,5 @@
-const kit = require('./koth/kit');
-const GAME_CONSTANTS = require('./koth/game_constants');
+const kit = require('./energium/kit');
+const GAME_CONSTANTS = require('./energium/game_constants');
 const DIRECTIONS = GAME_CONSTANTS.DIRECTIONS;
 const ALL_DIRECTIONS = [DIRECTIONS.EAST, DIRECTIONS.NORTH, DIRECTIONS.WEST, DIRECTIONS.SOUTH];
 // create a new agent
@@ -17,13 +17,13 @@ agent.initialize().then(async () => {
 
     const myUnits = player.units;
     const myBases = player.bases;
-    console.error(`Turn ${agent.turn} | ID: ${player.team} - ${player.bases.length} bases - ${myUnits.length} units - points ${player.points}`);
+    console.error(`Turn ${agent.turn} | ID: ${player.team} - ${player.bases.length} bases - ${myUnits.length} units - energium ${player.energium}`);
 
     /** AI Code goes here */
     let commands = [];
 
     // spawn unit until we have 4 units
-    if (myUnits.length < 4 && player.points >= GAME_CONSTANTS.PARAMETERS.UNIT_COST) {
+    if (myUnits.length < 4 && player.energium >= GAME_CONSTANTS.PARAMETERS.UNIT_COST) {
       commands.push(myBases[0].spawnUnit());
     }
 

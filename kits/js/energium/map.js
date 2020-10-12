@@ -23,7 +23,7 @@ class GameMap {
 class Tile {
   constructor(x, y) {
     this.pos = new Position(x, y);
-    this.points = 0;
+    this.energium = 0;
     this.baseTeam = null;
   }
   isBase() {

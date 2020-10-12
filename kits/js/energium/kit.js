@@ -123,13 +123,13 @@ class Agent {
           const y = update.nextInt();
           const pts = update.nextInt();
           const tile = this.map.getTile(x, y);
-          tile.points = pts;
+          tile.energium = pts;
           break;
         }
         case INPUT_CONSTANTS.TEAM_POINTS: {
           const team = update.nextInt();
           const pts = update.nextInt();
-          this.players[team].points = pts;
+          this.players[team].energium = pts;
           break;
         }
         case INPUT_CONSTANTS.UNIT_DATA: {
