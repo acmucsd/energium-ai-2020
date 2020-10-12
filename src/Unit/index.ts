@@ -1,6 +1,8 @@
 import { Position } from '../Tile/position';
 
 export class Unit {
+  /** How broken down the unit is. past max, the unit should vanish */
+  public breakdownLevel = 0;
   constructor(
     public team: Unit.TEAM,
     public id: number,

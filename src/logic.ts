@@ -149,7 +149,7 @@ export class KingOfTheHillLogic {
       match
     );
 
-    // remove any units that collided because they spawned into a taken tile.
+    // remove any units that collided because they spawned into a taken tile. remove units with higher breakdown and if tied, all get removed
     const unitsToRemove: Array<Unit> = [];
     spawnedPositions.forEach((pos) => {
       const tile = game.map.getTileByPos(pos);

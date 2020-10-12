@@ -8,6 +8,8 @@
   "PARAMETERS": {
     "UNIT_COST": 50,
     "MAX_TURNS": 200,
-    "INITIAL_POINTS": 50
+    "INITIAL_POINTS": 50,
+    "BREAKDOWN_TURNS": 10,
+    "BREAKKDOWN_MAX": 10
   }
 }
