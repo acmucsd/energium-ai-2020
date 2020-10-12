@@ -198,12 +198,24 @@ class MainScene extends Phaser.Scene {
       EnergiumLogic.initialize(this.pseudomatch).then(() => {
         this.generateGameFrames(replayData).then(() => {
           this.renderFrame(0);
+          this.storeResults();
           this.game.events.emit('setup');
         });
       });
     // }, 1000);
   }
-
+  
+  winningTeam: number = 0;
+  storeResults() {
+    const lastFrame = this.frames[this.frames.length - 1];
+    const apts = lastFrame.teamStates[Unit.TEAM.A].points;
+    const bpts = lastFrame.teamStates[Unit.TEAM.B].points;
+    if (bpts > apts) {
+      this.winningTeam = 1;
+    } else if (bpts === apts) {
+      this.winningTeam = -1;
+    }
+  }
   /**
    * Creates a snapshot of the game state
    * @param game

@@ -37,10 +37,12 @@ export class EnergiumDesign extends Design {
         [Unit.TEAM.A]: {
           points: teamAPts,
           terminated: match.agents[Unit.TEAM.A].isTerminated(),
+          name: match.agents[Unit.TEAM.A].name,
         },
         [Unit.TEAM.B]: {
           points: teamBPts,
           terminated: match.agents[Unit.TEAM.B].isTerminated(),
+          name: match.agents[Unit.TEAM.B].name,
         },
         seed: state.configs.seed,
         turnsElapsed: game.state.turn,

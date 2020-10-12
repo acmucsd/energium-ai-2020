@@ -122,6 +122,9 @@ export class EnergiumLogic {
     });
     // if agent terminated, set all terminated agents scores to 0
     if (agentsTerminated[0] || agentsTerminated[1]) {
+      if (game.replay) {
+        game.replay.writeOut(match);
+      }
       // using literal here so wepback doesn't import Match package
       return 'finished' as Match.Status.FINISHED;
     }
@@ -170,7 +173,7 @@ export class EnergiumLogic {
 
     if (this.gameOver(game)) {
       if (game.replay) {
-        game.replay.writeOut();
+        game.replay.writeOut(match);
       }
       return 'finished' as Match.Status.FINISHED;
     }

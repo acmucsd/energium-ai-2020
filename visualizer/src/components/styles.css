@@ -16,6 +16,12 @@
   display: none;
 }
 .Game .link a{
-  color:#ef5350;
+  color: #ef5350;
   text-decoration: none;
+}
+.Game .team0 {
+  color: blue;
+}
+.Game .team1 {
+  color: #ef5350;
 }

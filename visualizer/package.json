@@ -33,7 +33,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@acmucsd/energium-2020": "^1.2.1",
+    "@acmucsd/energium-2020": "^1.2.2",
     "@material-ui/core": "^4.11.0",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",

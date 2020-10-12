@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { GameMap } from '../GameMap';
 import { Unit } from '../Unit';
+import { State } from '../types';
 
 export class Replay {
   public replayFilePath: string = null;
@@ -17,11 +18,16 @@ export class Replay {
     >;
     bases: Array<{ x: number; y: number; team: Unit.TEAM }>;
     allCommands: Array<Array<MatchEngine.Command>>;
+    agents: Array<{
+      name: string;
+      terminatedTurn: number;
+    }>;
   } = {
     seed: undefined,
     map: [],
     bases: [],
     allCommands: [],
+    agents: [],
   };
   constructor(match: Match, public compressReplay: boolean) {
     const d = new Date().valueOf();
@@ -58,7 +64,20 @@ export class Replay {
       });
     });
   }
-  public writeOut(): void {
+  public writeOut(match: Match): void {
+    const state: State = match.state;
+    this.data.agents = [{
+      terminatedTurn: -1,
+      name: match.agents[0].name,
+    }, {
+      terminatedTurn: -1,
+      name: match.agents[1].name
+    }]
+    Unit.ALL_TEAMS.forEach((team) => {
+      if (match.agents[team].isTerminated()) {
+        this.data.agents[team].terminatedTurn = state.game.state.turn;
+      }
+    });
     if (this.compressReplay) {
       const zipper = new JSZip();
       zipper.file(this.replayFilePath, JSON.stringify(this.data));

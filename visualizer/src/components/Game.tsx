@@ -180,6 +180,9 @@ export const GameComponent = () => {
               <CardContent>
                 {noUpload && renderUploadButton()}
                 {gameLoading && <CircularProgress />}
+                {isReady && <div>
+                <p><span className="team0">{main.replayData.agents[0].name}</span> vs. <span className="team1">{main.replayData.agents[1].name}</span> | { main.winningTeam === -1 ? 'Result: Tie' : `Result: ${main.replayData.agents[main.winningTeam].name} won`}</p>
+                  </div>}
                 <div id="content"></div>
                 <div className="play-buttons">
                   <Button className="play" color="primary" variant="contained" disabled={!isReady} onClick={() => {
