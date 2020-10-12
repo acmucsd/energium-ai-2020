@@ -9,6 +9,7 @@ import { generateGame } from './Game/gen';
 import { Replay } from './Replay';
 import { Unit } from './Unit';
 import { Action, MoveAction, SpawnAction } from './Actions';
+import { Tile } from './Tile';
 
 export class KingOfTheHillLogic {
   static async initialize(match: Match): Promise<void> {
@@ -73,7 +74,7 @@ export class KingOfTheHillLogic {
    *
    * p {team} {pts} - number of points the team has
    *
-   * u {team} {id} {x} {y} - unit of that team with that id at x y
+   * u {team} {id} {x} {y} {l} - unit of that team with that id at x y and last turn it was repaired
    */
   static async sendAllAgentsGameInformation(match: Match): Promise<void> {
     const state: State = match.state;
@@ -92,7 +93,7 @@ export class KingOfTheHillLogic {
       const units = game.state.teamStates[team].units;
       units.forEach((unit) => {
         promises.push(
-          match.sendAll(`u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y}`)
+          match.sendAll(`u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y} ${unit.lastRepairTurn}`)
         );
       });
     });
@@ -140,32 +141,23 @@ export class KingOfTheHillLogic {
         match.throw(agentID, err);
       }
     }
-    const spawnedPositions = game.handleSpawnActions(
+    const spawnedTilesSet = game.handleSpawnActions(
       actionsMap.get(Game.ACTIONS.CREATE_UNIT) as SpawnAction[],
       match
     );
-    game.handleMovementActions(
+    const movedTilesSet = game.handleMovementActions(
       actionsMap.get(Game.ACTIONS.MOVE) as MoveAction[],
       match
     );
-
-    // remove any units that collided because they spawned into a taken tile. remove units with higher breakdown and if tied, all get removed
-    const unitsToRemove: Array<Unit> = [];
-    spawnedPositions.forEach((pos) => {
-      const tile = game.map.getTileByPos(pos);
-      if (tile.units.size > 1) {
-        tile.units.forEach((unit) => {
-          unitsToRemove.push(unit);
-        });
-      }
+    const tiles = [...Array.from(spawnedTilesSet.values()), ...Array.from(movedTilesSet.values())]
+    const tilesSet: Set<Tile> = new Set();
+    tiles.forEach((tile) => {
+      tilesSet.add(tile);
     });
-    for (const unit of unitsToRemove) {
-      match.log.warn(
-        `Team ${unit.team} spawned unit collided at ${unit.pos}; turn ${game.state.turn}`
-      );
-      game.destroyUnit(unit.team, unit.id);
-    }
+    game.handleCollisions(tilesSet, match)
     game.handlePointsRelease();
+    game.handleRepairs();
+    game.handleBreakdown(match);
 
     if (state.configs.debug) {
       await this.debugViewer(game);

@@ -26,5 +26,7 @@ export interface AIMatchConfigs {
     UNIT_COST: number;
     MAX_TURNS: number;
     INITIAL_POINTS: number;
+    BREAKDOWN_TURNS: number;
+    BREAKDOWN_MAX: number;
   };
 }

@@ -5,7 +5,7 @@
   "author": "troyedwardsjr",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development && webpack-dev-server --mode development --devtool source-map",
+    "dev": "rm -rf dist && mkdir dist && cp -r assets dist/assets && webpack --mode development && webpack-dev-server --mode development --devtool source-map",
     "build": "rm -rf dist && webpack --mode production && cp -r assets dist/assets",
     "serve": "serve dist",
     "prettier": "prettier --write 'src/**/*.ts' 'src/**/*.tsx'"
@@ -33,7 +33,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@acmucsd/kingofthehill-2020": "^1.1.1",
+    "@acmucsd/kingofthehill-2020": "^1.1.3",
     "@material-ui/core": "^4.11.0",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",

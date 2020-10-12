@@ -148,9 +148,9 @@ export class Game {
   handleSpawnActions(
     actions: Array<SpawnAction>,
     match: Match
-  ): Array<Position> {
+  ): Set<Tile> {
     const spawnedPositionsHashes: Set<number> = new Set();
-    const spawnedPositions: Array<Position> = [];
+    const spawnedPositions: Set<Tile> = new Set();
 
     const UNIT_COST = this.configs.parameters.UNIT_COST;
     actions.forEach((action) => {
@@ -160,7 +160,7 @@ export class Game {
         this.state.teamStates[action.team].points -= UNIT_COST;
         if (!spawnedPositionsHashes.has(action.pos.hash())) {
           spawnedPositionsHashes.add(action.pos.hash());
-          spawnedPositions.push(action.pos);
+          spawnedPositions.add(this.map.getTileByPos(action.pos));
         }
       } else {
         match.log.warn(
@@ -172,7 +172,7 @@ export class Game {
     return spawnedPositions;
   }
   // move all units and then destroy any that collide
-  handleMovementActions(actions: Array<MoveAction>, match: Match): void {
+  handleMovementActions(actions: Array<MoveAction>, match: Match): Set<Tile> {
     const tilesWithNewUnits: Set<Tile> = new Set();
     const idsOfUnitsThatMoved: Set<Unit.ID> = new Set();
     actions.forEach((action) => {
@@ -189,17 +189,41 @@ export class Game {
       }
     });
 
-    const unitsToRemove: Array<Unit> = [];
-    tilesWithNewUnits.forEach((tile) => {
+    return tilesWithNewUnits;
+  }
+
+  handleCollisions(tilesToCheck: Set<Tile>, match: Match): void {
+    const unitsToRemove: Array<{unit: Unit, tile: Tile}> = [];
+    tilesToCheck.forEach((tile) => {
       if (tile.units.size > 1) {
+        // find lowest brokendown unit
         // remove all units as they collided
-        match.log.warn(`${tile.units.size} units collided at ${tile.pos}; turn ${this.state.turn}`);
+        let lowestBreakdown = 999999;
+        let lowestBreakdownUnits = 1;
         tile.units.forEach((unit) => {
-          unitsToRemove.push(unit);
+          const b = unit.getBreakdownLevel(this.state.turn, this.configs.parameters.BREAKDOWN_TURNS);
+          if (b < lowestBreakdown) {
+            lowestBreakdown = b;
+            lowestBreakdownUnits = 1;
+          } else if (b == lowestBreakdown) {
+            lowestBreakdownUnits++;
+          }
+        });
+        tile.units.forEach((unit) => {
+          if (lowestBreakdownUnits > 1) {
+            // all get removed
+            unitsToRemove.push({unit, tile});
+          } else {
+            const b = unit.getBreakdownLevel(this.state.turn, this.configs.parameters.BREAKDOWN_TURNS);
+            if (b > lowestBreakdown) {
+              unitsToRemove.push({unit, tile});
+            }
+          }
         });
       }
     });
-    for (const unit of unitsToRemove) {
+    for (const {unit, tile} of unitsToRemove) {
+      match.log.warn(`Team ${unit.team}'s unit ${unit.id} collided at ${tile.pos.toString()} on turn ${this.state.turn}`);
       this.destroyUnit(unit.team, unit.id);
     }
   }
@@ -212,6 +236,33 @@ export class Game {
         const tile = this.map.getTileByPos(unit.pos);
         this.state.teamStates[team].points += tile.pointsPerTurn;
       });
+    });
+  }
+  // run after movements and collisions are handled
+  handleRepairs(): void {
+    this.map.bases.forEach((b) => {
+      const tile = this.map.getTileByPos(b.pos);
+      tile.units.forEach((unit) => {
+        if (b.team === unit.team) {
+          unit.lastRepairTurn = this.state.turn;
+        }
+      });
+    });
+  }
+  handleBreakdown(match: Match): void {
+    const brokenDownUnits: Array<Unit> = [];
+    Unit.ALL_TEAMS.forEach((team) => {
+      const units = this.getTeamsUnits(team);
+      units.forEach((unit) => {
+        const b = unit.getBreakdownLevel(this.state.turn, this.configs.parameters.BREAKDOWN_TURNS);
+        if (b >= this.configs.parameters.BREAKDOWN_MAX) {
+          brokenDownUnits.push(unit);
+        }
+      });
+    });
+    brokenDownUnits.forEach((unit) => {
+      match.log.warn(`Team ${unit.team}'s unit ${unit.id} broke down`);
+      this.destroyUnit(unit.team, unit.id);
     });
   }
 }

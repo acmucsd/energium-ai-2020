@@ -33,15 +33,21 @@ class Base {
 }
 
 class Unit {
-  constructor(teamid, unitid, x, y) {
+  constructor(teamid, unitid, x, y, lastRepairTurn, turn) {
     this.pos = new Position(x, y);
     this.team = teamid;
     this.id = unitid;
+    this.lastRepairTurn = lastRepairTurn;
+    this.matchTurn = turn;
   }
  
   /** return the command to move unit in the given direction */
   move(dir) {
     return `m ${this.id} ${dir}`;
+  }
+
+  getBreakdownLevel() {
+    return Math.floor((this.matchTurn - this.lastRepairTurn) / GAME_CONSTANTS.PARAMETERS.BREAKDOWN_TURNS);
   }
 }
 

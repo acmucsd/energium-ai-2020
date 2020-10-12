@@ -4,11 +4,13 @@ import React from 'react';
 import './styles.css';
 import { FrameSingleUnitData } from '../../scenes/MainScene';
 export type UnitCardProps = FrameSingleUnitData;
-const UnitCard = ({ pos, id }: UnitCardProps) => {
+const UnitCard = ({ pos, id, breakdownLevel, lastRepaired, team }: UnitCardProps) => {
   return (
     <Card className="UnitCard">
-      <CardContent>
-        <p>ID: {id}</p>
+      <CardContent className={`card-${team}`}>
+        <p>Collector Bot ID: {id}</p>
+        <p>Breakdown: {breakdownLevel}</p>
+        <p>Last Repaired: {lastRepaired}</p>
       </CardContent>
     </Card>
   );

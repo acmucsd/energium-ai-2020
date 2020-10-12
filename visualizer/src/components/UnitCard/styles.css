@@ -1,1 +1,6 @@
-.UnitCard {}
+.UnitCard .card-0 {
+  border-top: 1rem solid #03a9f4;
+}
+.UnitCard .card-1 {
+  border-top: 1rem solid #f44336;
+}

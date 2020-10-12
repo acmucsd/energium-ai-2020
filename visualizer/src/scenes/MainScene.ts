@@ -31,6 +31,8 @@ export interface FrameSingleUnitData {
   pos: Position;
   team: Unit.TEAM;
   id: number;
+  lastRepaired: number;
+  breakdownLevel: number;
 }
 
 export type GameCreationConfigs = {
@@ -232,6 +234,8 @@ class MainScene extends Phaser.Scene {
         team: unit.team,
         id: unit.id,
         pos: unit.pos,
+        lastRepaired: unit.lastRepairTurn,
+        breakdownLevel: unit.getBreakdownLevel(game.state.turn, game.configs.parameters.BREAKDOWN_TURNS)
       });
     });
 

@@ -24,7 +24,7 @@ const run = async () => {
   const match = await kdim.createMatch(botList, {
     storeErrorLogs: true,
     storeReplay: true,
-    debug: true,
+    debug: false,
     debugDelay: 50,
     seed: 81863094,
     engineOptions: {
