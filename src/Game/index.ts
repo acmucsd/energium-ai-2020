@@ -192,7 +192,7 @@ export class Game {
     return tilesWithNewUnits;
   }
 
-  handleCollisions(tilesToCheck: Array<Tile>, match: Match): void {
+  handleCollisions(tilesToCheck: Set<Tile>, match: Match): void {
     const unitsToRemove: Array<{unit: Unit, tile: Tile}> = [];
     tilesToCheck.forEach((tile) => {
       if (tile.units.size > 1) {
@@ -209,7 +209,6 @@ export class Game {
             lowestBreakdownUnits++;
           }
         });
-        console.log(tile.units);
         tile.units.forEach((unit) => {
           if (lowestBreakdownUnits > 1) {
             // all get removed

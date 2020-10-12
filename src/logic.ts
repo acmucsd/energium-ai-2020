@@ -9,6 +9,7 @@ import { generateGame } from './Game/gen';
 import { Replay } from './Replay';
 import { Unit } from './Unit';
 import { Action, MoveAction, SpawnAction } from './Actions';
+import { Tile } from './Tile';
 
 export class KingOfTheHillLogic {
   static async initialize(match: Match): Promise<void> {
@@ -73,7 +74,7 @@ export class KingOfTheHillLogic {
    *
    * p {team} {pts} - number of points the team has
    *
-   * u {team} {id} {x} {y} - unit of that team with that id at x y
+   * u {team} {id} {x} {y} {l} - unit of that team with that id at x y and last turn it was repaired
    */
   static async sendAllAgentsGameInformation(match: Match): Promise<void> {
     const state: State = match.state;
@@ -92,7 +93,7 @@ export class KingOfTheHillLogic {
       const units = game.state.teamStates[team].units;
       units.forEach((unit) => {
         promises.push(
-          match.sendAll(`u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y}`)
+          match.sendAll(`u ${unit.team} ${unit.id} ${unit.pos.x} ${unit.pos.y} ${unit.lastRepairTurn}`)
         );
       });
     });
@@ -149,8 +150,11 @@ export class KingOfTheHillLogic {
       match
     );
     const tiles = [...Array.from(spawnedTilesSet.values()), ...Array.from(movedTilesSet.values())]
-   
-    game.handleCollisions(tiles, match)
+    const tilesSet: Set<Tile> = new Set();
+    tiles.forEach((tile) => {
+      tilesSet.add(tile);
+    });
+    game.handleCollisions(tilesSet, match)
     game.handlePointsRelease();
     game.handleRepairs();
     game.handleBreakdown(match);

@@ -137,7 +137,8 @@ class Agent {
           const unitid = update.nextInt();
           const x = update.nextInt();
           const y = update.nextInt();
-          this.players[team].units.push(new Unit(team, unitid, x, y));
+          const lastRepairTurn = update.nextInt();
+          this.players[team].units.push(new Unit(team, unitid, x, y, lastRepairTurn, this.turn));
           break;
         }
       }
