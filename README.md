@@ -1,6 +1,6 @@
 # Energium AI Competition at UCSD
 
-Upon the dawn of the new millenium, energy has become currency, the most precious resource after majority of Earth's resources have been mined out. You are an energy corporation with the technology of **Collectors**, robots that can mine a energy rich resource known as energium on the asteroid belts of our solar system. 
+Upon the dawn of the new millenium, energy has become currency, the most precious resource after majority of Earth's resources have been mined out. You are an energy corporation with the technology of **Collectors**, robots that can mine a energy rich resource known as energium on the asteroid belts of our solar system.
 
 But time is of the essence, and these robots need an AI to help them run effectively and mine as much energium possible before time runs out. What makes matters worse is, there's always a rival corporation on the same asteroid for some reason, trying to mine the resources too. Your goal is to build the best AI agent to control these collectors and get more energy than your competitors. Also, for some reason in 1000 years, Javascript, Python, and Java continue to be prevalent langauges for AI.
 
@@ -42,16 +42,16 @@ You are given a `Player` object that contains details on your bot's current ener
 
 You are also given a `GameMap` object with data on all the map tiles, and the energium values of each tile.
 
-**Collectors** 
-Collectors can move in 4 directions, North, East, South, West. The starter kit shows you how to move units using the `move` function. 
+**Collectors**
+Collectors can move in 4 directions, North, East, South, West. The starter kit shows you how to move units using the `move` function.
 
 Each collector has a breakdown level. This breakdown level resets to 0 each time the collector moves over a friendly **base**. As time passes, the collector slowly becomes more broken down. Once the breakdown level is 10, the collector malfunctions and vanishes.
 
 If two collectors, regardless of what team they are on, end up on the same tile on the map after a turn, the collector with the least breakdown level will survive and all collectors on the same tile will break down. If there's a tie in least breakdown level, all collectors break down.
 
-Collectors automatically gain or lose energium depending on the `energium` value stored on the tile the collector is on. Be wary that some tiles are severely energy  defficient, and can cause you to lose more energium by standing on it.
+Collectors automatically gain or lose energium depending on the `energium` value stored on the tile the collector is on. Be wary that some tiles are severely energy defficient, and can cause you to lose more energium by standing on it. Note that energium is special in that it cannot be depleted anywhere, it will always output that much energium whenever a collector is on it.
 
-**Bases** 
+**Bases**
 
 Bases have the ability to spend Energium to produce more **collector** bots on top of the base to help your corporation mine even more Energium. Caution that if there is a collector already on top of a base, any new collector spawned will either break the existing collector or both collectors will break!
 

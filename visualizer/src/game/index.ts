@@ -19,12 +19,15 @@ export const createGame = (configs: GameCreationConfigs): Phaser.Game => {
   const mapWidth = configs.replayData.map[0].length;
   config.width = 32 * mapWidth;
     config.height = 32 * mapWidth;
-  if (mapWidth <= 16) {
+  if (mapWidth <= 12) {
+    config.zoom = 1.5;
+  }
+  else if (mapWidth <= 16) {
     config.zoom = 1;
+  } else if (mapWidth <= 20) {
+    config.zoom = 0.75;
   } else {
     config.zoom = 0.5
-    config.width = 32 * mapWidth;
-    config.height = 32 * mapWidth;
   }
   
   const game = new Phaser.Game(config);
