@@ -2,19 +2,19 @@ import { Tournament } from 'dimensions-ai/lib/main/Tournament';
 import { Design } from 'dimensions-ai/lib/main/Design';
 import { Match } from 'dimensions-ai/lib/main/Match';
 import { MatchEngine } from 'dimensions-ai/lib/main/MatchEngine';
-import { KingOfTheHillLogic } from './logic';
+import { EnergiumLogic } from './logic';
 import { AIMatchResults, State } from './types';
 import { Unit } from './Unit';
 
-export class KingOfTheHillDesign extends Design {
+export class EnergiumDesign extends Design {
   async initialize(match: Match): Promise<void> {
-    return KingOfTheHillLogic.initialize(match);
+    return EnergiumLogic.initialize(match);
   }
   async update(
     match: Match,
     commands: Array<MatchEngine.Command>
   ): Promise<Match.Status> {
-    return KingOfTheHillLogic.update(match, commands);
+    return EnergiumLogic.update(match, commands);
   }
 
   async getResults(match: Match): Promise<AIMatchResults> {
@@ -50,7 +50,7 @@ export class KingOfTheHillDesign extends Design {
     if (teamBPts > teamAPts) {
       winningTeam = Unit.TEAM.B;
       losingTeam = Unit.TEAM.A;
-    } else {
+    } else if (teamBPts === teamAPts) {
       // a tie
       return {
         ranks: [

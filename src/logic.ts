@@ -11,7 +11,7 @@ import { Unit } from './Unit';
 import { Action, MoveAction, SpawnAction } from './Actions';
 import { Tile } from './Tile';
 
-export class KingOfTheHillLogic {
+export class EnergiumLogic {
   static async initialize(match: Match): Promise<void> {
     const state: State = {
       configs: deepCopy(DEFAULT_CONFIGS),

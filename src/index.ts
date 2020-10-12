@@ -1,5 +1,5 @@
-export { KingOfTheHillDesign } from './design';
-export { KingOfTheHillLogic } from './logic';
+export { EnergiumDesign } from './design';
+export { EnergiumLogic } from './logic';
 export * from './Game';
 export * from './Unit';
 export * from './Tile/position';

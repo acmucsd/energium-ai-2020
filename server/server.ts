@@ -1,9 +1,9 @@
 import {create} from 'dimensions-ai/lib/main';
 import {Agent} from 'dimensions-ai/lib/main/Agent';
-import { KingOfTheHillDesign } from '@acmucsd/kingofthehill-2020';
+import { EnergiumDesign } from '@acmucsd/energium-2020';
 import { GCloudStorage, Logger, MongoDB, Tournament } from 'dimensions-ai';
 
-const design = new KingOfTheHillDesign('kothdesign');
+const design = new EnergiumDesign('kothdesign');
 //@ts-ignore
 const acmdim = create(design, {
   name: 'acmdimension',
@@ -37,7 +37,7 @@ const setup = async () => {
   acmdim.createTournament([js, js], {
     rankSystem: Tournament.RankSystemTypes.TRUESKILL,
     type: Tournament.Type.LADDER,
-    resultHandler: KingOfTheHillDesign.resultHandler,
+    resultHandler: EnergiumDesign.resultHandler,
     agentsPerMatch: [2],
     consoleDisplay: true,
     tournamentConfigs: {

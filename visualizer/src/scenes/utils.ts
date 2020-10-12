@@ -1,5 +1,5 @@
-import { GameMap } from '@acmucsd/kingofthehill-2020/lib/es6/GameMap';
-import { Position } from '@acmucsd/kingofthehill-2020/lib/es6/Tile/position';
+import { GameMap } from '@acmucsd/energium-2020/lib/es6/GameMap';
+import { Position } from '@acmucsd/energium-2020/lib/es6/Tile/position';
 
 export const mapPosToPixels = (pos: Position): [number, number] => {
   return mapCoordsToPixels(pos.x, pos.y);

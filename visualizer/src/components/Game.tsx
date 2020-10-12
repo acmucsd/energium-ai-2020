@@ -18,7 +18,7 @@ import {
   FormControlLabel,
 } from '@material-ui/core';
 import './styles.css';
-import { AIMatchConfigs, Unit } from '@acmucsd/kingofthehill-2020';
+import { AIMatchConfigs, Unit } from '@acmucsd/energium-2020';
 import TileStats from './TileStats';
 
 export const GameComponent = () => {

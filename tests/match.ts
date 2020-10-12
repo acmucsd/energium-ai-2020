@@ -1,8 +1,8 @@
 // run with node -r esm -r ts-node/register tests/match.ts
 import { create, Logger } from 'dimensions-ai';
 // test running a match
-import { KingOfTheHillDesign } from '../src';
-const design = new KingOfTheHillDesign('Koth Design');
+import { EnergiumDesign } from '../src';
+const design = new EnergiumDesign('Koth Design');
 const kdim = create(design, {
   name: 'kothdimension',
   id: 'kothdim',

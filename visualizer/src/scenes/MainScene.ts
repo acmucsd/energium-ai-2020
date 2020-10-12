@@ -1,16 +1,16 @@
-import { State } from '@acmucsd/kingofthehill-2020/lib/es6/types';
-import { DEFAULT_CONFIGS } from '@acmucsd/kingofthehill-2020/lib/es6/defaults';
-import { KingOfTheHillLogic } from '@acmucsd/kingofthehill-2020/lib/es6/logic';
-import { Game } from '@acmucsd/kingofthehill-2020/lib/es6/Game';
-import { Unit } from '@acmucsd/kingofthehill-2020/lib/es6/Unit';
+import { State } from '@acmucsd/energium-2020/lib/es6/types';
+import { DEFAULT_CONFIGS } from '@acmucsd/energium-2020/lib/es6/defaults';
+import { EnergiumLogic } from '@acmucsd/energium-2020/lib/es6/logic';
+import { Game } from '@acmucsd/energium-2020/lib/es6/Game';
+import { Unit } from '@acmucsd/energium-2020/lib/es6/Unit';
 import {
   hashMapCoords,
   mapCoordsToPixels,
   mapPosToPixels,
   memorySizeOf,
 } from './utils';
-import { Position } from '@acmucsd/kingofthehill-2020/lib/es6/Tile/position';
-import { GameMap } from '@acmucsd/kingofthehill-2020/lib/es6/GameMap';
+import { Position } from '@acmucsd/energium-2020/lib/es6/Tile/position';
+import { GameMap } from '@acmucsd/energium-2020/lib/es6/GameMap';
 import { TILE_MAPPING } from './tileMapping';
 
 export interface Frame {
@@ -202,7 +202,7 @@ class MainScene extends Phaser.Scene {
     // this.pseudomatch.configs.preLoadedGame = this.kothgame;
     this.pseudomatch.configs.seed = this.replayData.seed;
     // setTimeout(() => {
-      KingOfTheHillLogic.initialize(this.pseudomatch).then(() => {
+      EnergiumLogic.initialize(this.pseudomatch).then(() => {
         this.generateGameFrames(replayData).then(() => {
           this.renderFrame(0);
           this.game.events.emit('setup');
@@ -313,7 +313,7 @@ class MainScene extends Phaser.Scene {
       const commands: any[] = replayData.allCommands[this.currentTurn];
       const state: State = this.pseudomatch.state;
       const game = state.game;
-      await KingOfTheHillLogic.update(this.pseudomatch, commands);
+      await EnergiumLogic.update(this.pseudomatch, commands);
 
       [
         ...Array.from(game.getTeamsUnits(Unit.TEAM.A).values()),

@@ -1,4 +1,4 @@
-import { Unit } from '@acmucsd/kingofthehill-2020/lib/es6/Unit';
+import { Unit } from '@acmucsd/energium-2020/lib/es6/Unit';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
