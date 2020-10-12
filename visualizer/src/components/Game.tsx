@@ -13,6 +13,8 @@ import {
   CardContent,
   Slider,
   Grid,
+  Checkbox,
+  FormControlLabel,
 } from '@material-ui/core';
 import './styles.css';
 import { AIMatchConfigs, Unit } from '@acmucsd/kingofthehill-2020';
@@ -114,6 +116,9 @@ export const GameComponent = () => {
   const handleTileClicked = (data) => {
     setTileData(data);
   };
+  const handleTextOverlayCheckChange = () => {
+    main.toggleTextOverlay();
+  }
   return (
     <div className="Game">
       <div className="gameContainer">
@@ -157,6 +162,16 @@ export const GameComponent = () => {
                     {'>'}
                   </Button>
                 </ButtonGroup>
+                <br />
+                <FormControlLabel
+                  value="Toggle Points Overlay"
+                  control={<Checkbox 
+                    onChange={handleTextOverlayCheckChange}
+                  />}
+                  label="Toggle Points Overlay"
+                  labelPlacement='end'
+                />
+                
               </CardContent>
             </Card>
           </Grid>
@@ -176,6 +191,7 @@ export const GameComponent = () => {
                         key={team}
                         points={currentFrame.teamStates[team].points}
                         team={team}
+                        unitCount={currentFrame.teamStates[team].unitCount}
                       />
                     );
                   })}

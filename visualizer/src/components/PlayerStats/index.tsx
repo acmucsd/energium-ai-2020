@@ -8,15 +8,18 @@ import './styles.css';
 export type PlayerStatsProps = {
   team: Unit.TEAM;
   points: number;
+  unitCount: number;
 };
 const PlayerStats = ({
   team,
   points,
+  unitCount,
 }: PlayerStatsProps) => {
   return (
     <div className="PlayerStats">
       <h3>Team {team} Stats</h3>
       <p>Points: {points}</p>
+      <p># of Collectors: {unitCount}</p>
       <Divider />
     </div>
   );

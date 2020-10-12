@@ -11,16 +11,19 @@ import {
 } from './utils';
 import { Position } from '@acmucsd/kingofthehill-2020/lib/es6/Tile/position';
 import { GameMap } from '@acmucsd/kingofthehill-2020/lib/es6/GameMap';
+import { TILE_MAPPING } from './tileMapping';
 
 export interface Frame {
   teamStates: FrameTeamStateData;
   unitData: FrameUnitData;
   errors: string[];
+  commands: any[];
 }
 
 type FrameTeamStateData = {
   [x in Unit.TEAM]: {
     points: number;
+    unitCount: number;
   };
 };
 type FrameUnitData = Map<number, FrameSingleUnitData>;
@@ -91,7 +94,7 @@ class MainScene extends Phaser.Scene {
   preload() {
     this.load.tilemapTiledJSON('map', 'assets/tilemaps/desert.json');
     this.load.image('Desert', 'assets/tilemaps/tmw_desert_spacing.png');
-    this.load.image('Grass', 'assets/tilemaps/ground_tileset.png');
+    this.load.image('space', 'assets/tilemaps/kothtiles.png');
     this.load.image('worker0', 'assets/sprites/worker0.png');
     this.load.image('worker1', 'assets/sprites/worker1.png');
     this.load.image('cart0', 'assets/sprites/cart0.png');
@@ -116,7 +119,28 @@ class MainScene extends Phaser.Scene {
     this.currentSelectedTilePos = clickedPos;
   }
 
+
+  getTileIndexForPoints(pts: number) { 
+    if (pts === 0) {
+      return 4;
+    }
+    if (pts < 0) {
+      return Math.min(4 - Math.round(pts / 2), 19);
+    }
+    if (pts > 0) {
+      return Math.max(4 - Math.round(pts / 2), 0);
+    }
+  }
+
   replayData: any;
+  text: any[] = [];
+  showTextOverlay = false;
+  toggleTextOverlay(): void {
+    this.showTextOverlay = !this.showTextOverlay;
+    this.text.forEach((a) => {
+      a.setVisible(this.showTextOverlay);
+    });
+  }
   loadReplayData(replayData: any): void {
     this.replayData = replayData;
     this.kothgame = new Game(DEFAULT_CONFIGS);
@@ -129,19 +153,20 @@ class MainScene extends Phaser.Scene {
     });
     const level = [];
     for (let y = 0; y < height; y++) {
+      level.push([]);
       for (let x = 0; x < width; x++) {
-        // this.kothgame.map.getTile(x, y).pointsPerTurn = replayData.map[y][x].ppt;
-        const pixels = mapPosToPixels(new Position(x, y))
-        this.add.text(pixels[0], pixels[1], replayData.map[y][x].ppt);
+        // const c = [4, 14, 15, 16][Math.floor(Math.random() *  4)];
+        const c = this.getTileIndexForPoints(replayData.map[y][x].ppt);
+        level[y].push(c);
       }
     }
     this.map = this.make.tilemap({
       data: level,
-      tileWidth: 16,
-      tileHeight: 16,
+      tileWidth: 8,
+      tileHeight: 8,
     });
-    const tileset: Phaser.Tilemaps.Tileset = this.map.addTilesetImage('Grass');
-    this.map.createStaticLayer(0, tileset, 0, 0).setScale(2);
+    const tileset: Phaser.Tilemaps.Tileset = this.map.addTilesetImage('space');
+    this.map.createStaticLayer(0, tileset, 0, 0).setScale(4);
     this.input.on(
       Phaser.Input.Events.POINTER_DOWN,
       (d: { worldX: number; worldY: number }) => {
@@ -151,7 +176,16 @@ class MainScene extends Phaser.Scene {
     );
     this.dynamicLayer = this.map
       .createBlankDynamicLayer('bases', tileset)
-      .setScale(2);
+      .setScale(4);
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const pixels = mapPosToPixels(new Position(x, y))
+        const text = this.add.text(pixels[0] - 8, pixels[1] - 8, replayData.map[y][x].ppt)
+        text.setVisible(false);
+        this.text.push(text);
+      }
+    }
 
     this.cameras.main.setBounds(
       0,
@@ -177,13 +211,15 @@ class MainScene extends Phaser.Scene {
    * Creates a snapshot of the game state
    * @param game
    */
-  createFrame(game: Game): Frame {
+  createFrame(game: Game, commands: any[]): Frame {
     const teamStates: FrameTeamStateData = {
       [Unit.TEAM.A]: {
         points: game.state.teamStates[Unit.TEAM.A].points,
+        unitCount: game.getTeamsUnits(Unit.TEAM.A).size
       },
       [Unit.TEAM.B]: {
         points: game.state.teamStates[Unit.TEAM.B].points,
+        unitCount: game.getTeamsUnits(Unit.TEAM.B).size
       },
     };
 
@@ -202,7 +238,8 @@ class MainScene extends Phaser.Scene {
     return {
       unitData,
       teamStates,
-      errors: this.currentTurnErrors
+      errors: this.currentTurnErrors,
+      commands,
     };
   }
 
@@ -256,14 +293,18 @@ class MainScene extends Phaser.Scene {
       this.onTileClicked(this.currentSelectedTilePos);
     }
     this.replayData.bases.forEach((b) => {
-      this.dynamicLayer.putTileAt(5, b.x, b.y, true);
+      let n = TILE_MAPPING.BASE0;
+      if (b.team === Unit.TEAM.B) {
+        n = TILE_MAPPING.BASE1;
+      }
+      this.dynamicLayer.putTileAt(n, b.x, b.y, true);
     });
   }
 
   async generateGameFrames(replayData) {
     while (this.currentTurn <= this.kothgame.configs.parameters.MAX_TURNS) {
       this.currentTurnErrors = [];
-      const commands = replayData.allCommands[this.currentTurn];
+      const commands: any[] = replayData.allCommands[this.currentTurn];
       const state: State = this.pseudomatch.state;
       const game = state.game;
       await KingOfTheHillLogic.update(this.pseudomatch, commands);
@@ -294,7 +335,7 @@ class MainScene extends Phaser.Scene {
         }
       });
 
-      const frame = this.createFrame(this.pseudomatch.state.game);
+      const frame = this.createFrame(this.pseudomatch.state.game, commands);
       // console.log(
       //   { turn: this.currentTurn },
       //   'frame size',
