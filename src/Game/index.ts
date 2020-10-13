@@ -108,6 +108,8 @@ export class Game {
             valid = false;
           }
           break;
+        default:
+          valid = false;
       }
       if (valid === false) {
         throw new MatchWarn(

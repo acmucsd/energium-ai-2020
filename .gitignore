@@ -14,3 +14,5 @@ tests/bots
 
 server/keys
 server/.env
+
+__pycache__

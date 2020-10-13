@@ -1,6 +1,6 @@
 {
   "name": "@acmucsd/energium-2020",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "fall2020 ai competition! Objective is to collect as much Energium as possible before time runs out",
   "main": "lib/es5/index.js",
   "types": "lib/es5/index.d.ts",
