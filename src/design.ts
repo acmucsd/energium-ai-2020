@@ -49,6 +49,7 @@ export class EnergiumDesign extends Design {
         seed: state.configs.seed,
         turnsElapsed: game.state.turn,
       },
+      replayFile: game.replay.replayFilePath
     };
     if (aterm && !bterm) {
       winningTeam = Unit.TEAM.B;

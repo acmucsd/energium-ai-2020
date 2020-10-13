@@ -1,6 +1,6 @@
 {
   "name": "@acmucsd/energium-2020",
-  "version": "1.2.3",
+  "version": "1.2.6",
   "description": "fall2020 ai competition! Objective is to collect as much Energium as possible before time runs out",
   "main": "lib/es5/index.js",
   "types": "lib/es5/index.d.ts",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@types/jszip": "^3.4.1",
     "colors": "^1.4.0",
-    "dimensions-ai": "^4.6.4",
+    "dimensions-ai": "^4.6.6",
     "jszip": "^3.5.0",
     "seedrandom": "^3.0.5",
     "yargs": "^16.0.3"

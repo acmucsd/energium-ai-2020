@@ -12,3 +12,9 @@ Then tag and push the image to the google container registry
 docker tag energium-ai-2020 gcr.io/energium-ai-2020/energium-ai-2020:latest
 docker push gcr.io/energium-ai-2020/energium-ai-2020:latest
 ```
+
+Test locally through API:
+
+```bash
+docker run -d --rm -p 9000:9000 energium-ai-2020
+```

@@ -18,23 +18,23 @@ const acmdim = create(design, {
 /** Define the images to use for each agent */
 const languageSpecificAgentOptions: Agent.LanguageSpecificOptions = {
   '.py': {
-    image: 'docker.io/python',
+    image: 'docker.io/acmaiucsd/python',
   },
   '.js': {
-    image: 'node:12.18.4-alpine3.9',
+    image: 'docker.io/acmaiucsd/js',
   },
 };
 
 const js = '../kits/js/bot.js';
 const setup = async () => {
   const mongo = new MongoDB(process.env.MONGO_CONNECTION_STRING);
-  // const gcs = new GCloudStorage({
-  //   projectId: 'lux-ai-test',
-  //   keyFilename: './keys/gcs-key.json',
-  // });
+  const gcs = new GCloudStorage({
+    projectId: 'acm-ai-proto-code',
+    keyFilename: './keys/gcs-key.json',
+  });
   await acmdim.use(mongo);
-  // await acmdim.use(gcs);
-  acmdim.createTournament([js, js], {
+  await acmdim.use(gcs);
+  acmdim.createTournament([], {
     rankSystem: Tournament.RankSystemTypes.TRUESKILL,
     type: Tournament.Type.LADDER,
     resultHandler: EnergiumDesign.resultHandler,

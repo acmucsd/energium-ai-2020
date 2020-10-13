@@ -59,9 +59,9 @@ Bases have the ability to spend Energium to produce more **collector** bots on t
 
 On the competition servers, we are using:
 
-Node version 12.?
+Node version v12.15.0.
 
-Python 3.?
+Python 3.8.2
 
 Java ?
 

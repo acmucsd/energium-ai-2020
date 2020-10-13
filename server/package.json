@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@acmucsd/energium-2020": "^1.2.1",
-    "dimensions-ai": "^4.6.4"
+    "@acmucsd/energium-2020": "^1.2.6",
+    "dimensions-ai": "^4.6.6"
   },
   "devDependencies": {
     "typescript": "^4.0.2"
