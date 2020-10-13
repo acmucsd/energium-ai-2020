@@ -5,4 +5,5 @@ docker pull acmaiucsd/python
 docker pull acmaiucsd/js
 
 # start server (use pm2 later)
-node lib/server.js
+/usr/sbin/httpd -k restart
+pm2-runtime lib/server.js
