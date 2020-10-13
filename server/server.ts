@@ -23,6 +23,9 @@ const languageSpecificAgentOptions: Agent.LanguageSpecificOptions = {
   '.js': {
     image: 'docker.io/acmaiucsd/js',
   },
+  '.java': {
+    image: 'docker.io/acmaiucsd/java',
+  }
 };
 
 const js = '../kits/js/bot.js';
@@ -42,12 +45,16 @@ const setup = async () => {
     consoleDisplay: false,
     tournamentConfigs: {
       syncConfigs: true,
+      maxConcurrentMatches: 1,
     },
     defaultMatchConfigs: {
       storeErrorLogs: true,
       loggingLevel: Logger.LEVEL.NONE,
       debug: false,
       compressReplay: true,
+      agentOptions: {
+        runCommands: { '.py': ['python3'] },
+      },
       languageSpecificAgentOptions,
     },
     name: 'ACM AI Fall 2020 Tournament',

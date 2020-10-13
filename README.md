@@ -63,7 +63,7 @@ Node version v12.15.0.
 
 Python 3.8.2
 
-Java ?
+Java - openjdk 1.8.0_252
 
 On the competition servers, the following packages are provided for use
 
