@@ -39,14 +39,15 @@ const setup = async () => {
     type: Tournament.Type.LADDER,
     resultHandler: EnergiumDesign.resultHandler,
     agentsPerMatch: [2],
-    consoleDisplay: true,
+    consoleDisplay: false,
     tournamentConfigs: {
-      syncConfigs: false,
+      syncConfigs: true,
     },
     defaultMatchConfigs: {
       storeErrorLogs: true,
       loggingLevel: Logger.LEVEL.NONE,
       debug: false,
+      compressReplay: true,
       languageSpecificAgentOptions,
     },
     name: 'ACM AI Fall 2020 Tournament',
