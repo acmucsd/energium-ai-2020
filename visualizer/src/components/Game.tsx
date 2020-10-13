@@ -1,4 +1,5 @@
 import 'phaser';
+import queryString from 'query-string'
 import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
 import MainScene, { Frame, FrameTileData } from '../scenes/MainScene';
@@ -18,14 +19,26 @@ import {
   FormControlLabel,
   ThemeProvider,
   createMuiTheme,
+  Snackbar,
+  IconButton
 } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import red from '@material-ui/core/colors/red';
 
 import './styles.css';
 import { AIMatchConfigs, Unit } from '@acmucsd/energium-2020';
 import TileStats from './TileStats';
 
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 export const GameComponent = () => {
+  const queryParams = queryString.parse(window.location.search) as {
+    matchID: string
+  };
+  const [notifWindowOpen, setNotifWindowOpen] = useState(false);
+  const [notifMsg, setNotifMsg] = useState("");
   const [isReady, setReady] = useState(false);
   const [selectedTileData, setTileData] = useState<FrameTileData>(null);
   const [game, setGame] = useState<Phaser.Game>(null);
@@ -102,6 +115,47 @@ export const GameComponent = () => {
     setGame(newgame);
     setUploading(false);
   }
+  useEffect(() => {
+    const id = queryParams.matchID;
+    if (id) {
+      const url = `http://34.120.177.157/api/dimensions/acmdim/tournaments/tourney/match/${id}/replay`
+      fetch(url).then((res) => {
+        if (res.status == 200){ 
+        return res.json();
+        }
+        else if (res.status === 400) {
+          console.error(`${id} is an invalid match id`);
+          setNotifMsg(`${id} is an invalid match id`);
+          setNotifWindowOpen(true);
+          throw Error;
+        }
+        else {
+          console.error("Something wrong happened");
+          setNotifMsg("Something wrong happened");
+          setNotifWindowOpen(true);
+          throw Error;
+        }
+      }).then((data) => {
+        console.log(data);
+        var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        fetch(proxyUrl + data.url).then((res) => res.blob()).then((res) => {
+          const unzip = new jszip();
+            unzip.loadAsync(res).then((data) => {
+              Object.values(data.files).forEach((info) => {
+                console.log(info);
+                if (info.dir === false) {
+                  info.async('string').then((json) => {
+                    let replayData = JSON.parse(json);
+                    setNewGame(replayData);
+                  });
+                }
+              });
+            });
+        })
+      }).catch(() => {});
+    }
+    
+  }, []);
   const handleUpload = () => {
     setUploading(true);
     if (fileInput.current.files.length) {
@@ -165,6 +219,30 @@ export const GameComponent = () => {
   return (
     <div className="Game">
       <div className="gameContainer">
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={notifWindowOpen}
+          autoHideDuration={6000}
+          onClose={() => {
+            setNotifWindowOpen(false);
+          }}
+          action={
+            <IconButton size="small" aria-label="close" color="inherit" onClick={() => {
+              setNotifWindowOpen(false);
+            }}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          }
+        >
+          <Alert onClose={() => {
+              setNotifWindowOpen(false);
+            }} severity="warning">
+            {notifMsg}
+          </Alert>
+        </Snackbar>
         <h1>Energium AI Competition</h1>
         <p className="link"><a href="https://ai.acmucsd.com/competitions" target="_blank" rel="noopener noreferrer">By ACM AI Competitions</a></p>
         <ThemeProvider theme={theme}>

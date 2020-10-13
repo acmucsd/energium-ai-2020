@@ -119,13 +119,13 @@ class MainScene extends Phaser.Scene {
 
   getTileIndexForPoints(pts: number) { 
     if (pts === 0) {
-      return 5;
+      return 1;
     }
     if (pts < 0) {
-      return Math.min(5 - Math.round(pts / 2), 19);
+      return Math.min(8 - Math.round(pts / 2), 19);
     }
     if (pts > 0) {
-      return Math.max(5 - Math.round(pts / 2), 1);
+      return Math.max(6 - Math.round(pts / 2), 2);
     }
   }
 

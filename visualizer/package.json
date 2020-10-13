@@ -1,12 +1,13 @@
 {
-  "name": "phaser3-typescript-webpack",
+  "name": "dimensions-ai-viewer",
   "version": "1.0.0",
   "description": "",
-  "author": "troyedwardsjr",
-  "main": "index.js",
+  "author": "StoneT2000",
+  "main": "lib/index.js",
   "scripts": {
     "dev": "rm -rf dist && mkdir dist && cp -r assets dist/assets && webpack --mode development && webpack-dev-server --mode development --devtool source-map",
     "build": "rm -rf dist && webpack --mode production && cp -r assets dist/assets",
+    "build-pkg": "rm -rf lib && webpack --mode production && cp -r assets lib/assets",
     "serve": "serve dist",
     "prettier": "prettier --write 'src/**/*.ts' 'src/**/*.tsx'"
   },
@@ -35,12 +36,16 @@
   "dependencies": {
     "@acmucsd/energium-2020": "^1.2.5",
     "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@types/classnames": "^2.2.10",
     "classnames": "^2.2.6",
     "fontsource-roboto": "^3.0.3",
     "jszip": "^3.5.0",
     "phaser": "^3.24.1",
+    "query-string": "^6.13.5",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.2.0"
   }
 }
