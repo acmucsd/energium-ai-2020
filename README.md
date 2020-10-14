@@ -29,7 +29,7 @@ npm install -g @acmucsd/energium-2020
 To run a match, run
 
 ```
-acmai-energium path/to/bot/folder path/to/other/bot/folder
+acmai-energium path/to/bot/file.js path/to/other/bot/file.js
 ```
 
 and it will output the game results, any relevant logs, store error logs in a `errorlogs` folder, and store a replay in a `replays` folder.
