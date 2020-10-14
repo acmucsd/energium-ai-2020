@@ -8,7 +8,7 @@ class Position:
     def equals(self, opos):
         return self.x == opos.x and self.y == opos.y
 
-    def isAdjacent(self, pos):
+    def is_adjacent(self, pos):
         dx = self.x - pos.x;
         dy = self.y - pos.y;
         if (math.abs(dx) + math.abs(dy) > 1):
@@ -24,12 +24,12 @@ class Position:
         elif direction == DIRECTIONS.WEST:
             return Position(self.x - units, self.y)
 
-    def distanceTo(self, pos):
+    def distance_to(self, pos):
         dx = pos.x - self.x
         dy = pos.y - self.y
         return math.sqrt(dx * dx + dy * dy);
 
-    def directionTo(self, targetPos):
+    def direction_to(self, targetPos):
         checkDirections = [
             DIRECTIONS.NORTH,
             DIRECTIONS.EAST,
@@ -37,10 +37,10 @@ class Position:
             DIRECTIONS.WEST,
         ];
         closestDirection = None
-        closestDist = self.distanceTo(targetPos)
+        closestDist = self.distance_to(targetPos)
         for dir in checkDirections:
             newpos = self.translate(dir, 1)
-            dist = targetPos.distanceTo(newpos)
+            dist = targetPos.distance_to(newpos)
             if (dist < closestDist):
                 closestDist = dist
                 closestDirection = dir

@@ -4,6 +4,7 @@ coverage
 .nyc_output
 bundles/visualizer/dist
 bundles/visualizer/package*.json
+*.class
 
 # we have mac users
 .DS_Store

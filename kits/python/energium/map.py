@@ -15,9 +15,9 @@ class GameMap:
             for x in range(self.width):
                 self.map[y].append(Tile(x, y))
 
-    def getTileByPos(self, pos: Position):
+    def get_tile_by_pos(self, pos: Position):
         return self.map[pos.y][pos.x]
-    def getTile(self, x: int, y: int):
+    def get_tile(self, x: int, y: int):
         return self.map[y][x]
 
 class Tile:
@@ -28,5 +28,5 @@ class Tile:
         self.pos = Position(x, y)
         self.base_team = None
         self.energium = 0
-    def isBase(self):
+    def is_base(self):
         return self.baseTeam != None
