@@ -6,7 +6,7 @@ But time is of the essence, and these robots need an AI to help them run effecti
 
 See [Getting Started](#Getting-Started) to start programming and uploading a bot to compete against others! See [Specs](#Specs) for details on how the competition works, and how to develop your bot.
 
-The live competition can be found here: https://ai.acmucsd.com/competitions
+The live competition can be found here: https://ai.acmucsd.com/competitions/energium
 
 ## Getting Started
 
