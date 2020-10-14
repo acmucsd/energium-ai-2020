@@ -3,6 +3,7 @@
 # pull all relevant images
 docker pull acmaiucsd/python
 docker pull acmaiucsd/js
+docker pull acmaiucsd/java
 
 # run the startup script to setup apache
 
