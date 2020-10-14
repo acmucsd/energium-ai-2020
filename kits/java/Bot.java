@@ -40,6 +40,8 @@ public class Bot {
             if (units.size() < 4 && player.energium >= GameConstants.UNIT_COST) {
                 commands.add(bases.get(0).spawnUnit());
             }
+
+            // iterate over all of our collectors and make them do something
             for (int i = 0; i < units.size(); i++) {
                 Unit unit = units.get(i);
 

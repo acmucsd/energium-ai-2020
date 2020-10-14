@@ -19,6 +19,9 @@ agent.initialize().then(async () => {
     const myUnits = player.units;
     /** All of your bases */
     const myBases = player.bases;
+
+    // Use console.error to print messages to the terminal or your error log.
+    // console.log is reserved for the match engine. Uncomment the lines below to log something
     // console.error(`Turn ${agent.turn} | ID: ${player.team} - ${player.bases.length} bases - ${myUnits.length} units - energium ${player.energium}`);
 
     /** AI Code goes here */
@@ -33,6 +36,7 @@ agent.initialize().then(async () => {
       commands.push(myBases[0].spawnUnit());
     }
 
+    // iterate over all of our collectors and make them do something
     for (let i = 0; i < myUnits.length; i++) {
       const unit = myUnits[i];
       // first we check the breakdown level, if unit is about to break down, lets make
