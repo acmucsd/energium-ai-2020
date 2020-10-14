@@ -19,7 +19,7 @@ const java = './kits/java/Bot.java';
 const goodjs = './tests/bots/js1/bot.js';
 const botList = [
   { file: java, name: 'java' },
-  { file: py, name: 'js' },
+  { file: goodjs, name: 'goodjs' },
 ];
 
 const run = async () => {

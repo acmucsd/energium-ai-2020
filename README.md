@@ -10,7 +10,7 @@ The live competition can be found here: https://ai.acmucsd.com/competitions/ener
 
 ## Getting Started
 
-Download a starter kit of your choice from [Javascript](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/js/jskit.zip), [Python](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/python/pythonkit.zip), or [Java](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/java/javakiit.zip). Please note, Windows is not supported, please use WSL to access a linux distribution. See [this](https://github.com/KNOXDEV/wsl) for instructions on how to use WSL.
+Download a starter kit of your choice from [Javascript](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/js/jskit.zip), [Python](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/python/pythonkit.zip), or [Java](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/java/javakit.zip). Please note, Windows is not supported, please use WSL to access a linux distribution. See [this](https://github.com/KNOXDEV/wsl) for instructions on how to use WSL.
 
 Make sure you have [Node.js](https://nodejs.org/) installed, of at least version 12 or above.
 
@@ -44,9 +44,9 @@ Keep reading to learn how the competition works and the rules of the AI game
 
 ## Specs
 
-This is a turn based, 1 vs 1 competition. Each match, two bots compete to get the most energium in store by the end of 200 turns. Each turn, your bot has a second of computation to do whatever it can to win (a second is quite a lot!)
+This is a turn based, 1 vs 1 competition. Each match, two bots compete to get the most energium in store by the end of 200 turns. Each turn, your bot has a second of computation to do whatever it can to win (a second is quite a lot!) and about 1GB of RAM (you probably wont need this much). The computation times are subject to change, but will only ever increase.
 
-You are given a `Player` object that contains details on your bot's current energium stored, how many **collectors** it has, and the location of all of its **bases**. See the Starter kits for details on how to access this data!
+You are given a `Player` object that contains details on your bot's current energium stored, how many **collectors** it has, and the location of all of its **bases**. See the Starter kits bot file for details on how to access this data and send commands to run your bot.
 
 You are also given a `GameMap` object with data on all the map tiles, and the energium values of each tile.
 
