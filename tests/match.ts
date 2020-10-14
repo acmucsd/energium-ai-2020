@@ -15,10 +15,11 @@ const kdim = create(design, {
 
 const js = './kits/js/bot.js';
 const py = './kits/python/bot.py';
+const java = './kits/java/Bot.java';
 const goodjs = './tests/bots/js1/bot.js';
 const botList = [
-  { file: py, name: 'py' },
-  { file: goodjs, name: 'goodjs' },
+  { file: java, name: 'java' },
+  { file: js, name: 'js' },
 ];
 
 const run = async () => {

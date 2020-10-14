@@ -55,11 +55,9 @@ export class EnergiumLogic {
     for (let y = 0; y < map.height; y++) {
       for (let x = 0; x < map.width; x++) {
         const tile = map.getTile(x, y);
-        if (tile.pointsPerTurn > 0) {
-          tileMessages.push(
-            match.sendAll(`t ${tile.pos.x} ${tile.pos.y} ${tile.pointsPerTurn}`)
-          );
-        }
+        tileMessages.push(
+          match.sendAll(`t ${tile.pos.x} ${tile.pos.y} ${tile.pointsPerTurn}`)
+        );
       }
     }
 
