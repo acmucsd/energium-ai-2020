@@ -20,8 +20,15 @@
   text-decoration: none;
 }
 .Game .team0 {
-  color: blue;
+  color: rgb(92, 207, 250);
 }
 .Game .team1 {
   color: #ef5350;
+}
+.Game .legend div {
+  display: inline-block;
+}
+.Game .legend img {
+  width: 300px;
+  margin-right: 1rem;
 }

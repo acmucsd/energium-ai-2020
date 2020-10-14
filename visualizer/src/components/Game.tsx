@@ -187,7 +187,7 @@ export const GameComponent = () => {
   };
   const renderUploadButton = () => {
     return (
-      <Button variant="contained" component="label">
+      <Button variant="contained" component="label" color="primary">
         Upload Replay{' '}
         <input
           accept=".json, .replay"
@@ -216,6 +216,13 @@ export const GameComponent = () => {
       }
     }
   });
+  const renderResult = () => {
+    return <>
+      {isReady && <div>
+      <p><span className="team0">{main.replayData.agents[0].name}</span> vs. <span className="team1">{main.replayData.agents[1].name}</span> | { main.winningTeam === -1 ? 'Result: Tie' : `Result: ${main.replayData.agents[main.winningTeam].name} won`}</p>
+        </div>}
+    </>
+  }
   return (
     <div className="Game">
       <div className="gameContainer">
@@ -258,9 +265,7 @@ export const GameComponent = () => {
               <CardContent>
                 {noUpload && renderUploadButton()}
                 {gameLoading && <CircularProgress />}
-                {isReady && <div>
-                <p><span className="team0">{main.replayData.agents[0].name}</span> vs. <span className="team1">{main.replayData.agents[1].name}</span> | { main.winningTeam === -1 ? 'Result: Tie' : `Result: ${main.replayData.agents[main.winningTeam].name} won`}</p>
-                  </div>}
+                
                 <div id="content"></div>
                 <div className="play-buttons">
                   <Button className="play" color="primary" variant="contained" disabled={!isReady} onClick={() => {
@@ -322,7 +327,16 @@ export const GameComponent = () => {
                   label="Toggle Energium Values Overlay"
                   labelPlacement='end'
                 />
-                
+                {isReady && <div className="legend">
+                  <div>
+                    <p>Energium Rich Tiles</p>
+                    <img src="/assets/energyvalued.png"/>
+                  </div>
+                  <div>
+                    <p>Energium Deficient Tiles</p>
+                    <img src="/assets/energydeficient.png"/>
+                  </div>
+                  </div>}
               </CardContent>
             </Card>
           </Grid>
@@ -334,6 +348,7 @@ export const GameComponent = () => {
                     {...selectedTileData}
                   />
                 )}
+                {renderResult()}
                 {isReady && <GameStats turn={turn} seed={main.replayData.seed} size={main.replayData.map.length} />}
                 {currentFrame !== null &&
                   [0, 1].map((team: Unit.TEAM) => {
