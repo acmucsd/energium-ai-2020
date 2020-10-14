@@ -3,6 +3,7 @@
 Upon the dawn of the new millenium, energy has become currency, the most precious resource after majority of Earth's resources have been mined out. You are an energy corporation with the technology of **Collectors**, robots that can mine a energy rich resource known as energium on the asteroid belts of our solar system.
 
 <img src="/workers.png" width=200>
+
 *a pair of collectors*
 
 But time is of the essence, and these robots need an AI to help them run effectively and mine as much energium possible before time runs out. What makes matters worse is, there's always a rival corporation on the same asteroid for some reason, trying to mine the resources too. Your goal is to build the best AI agent to control these collectors and get more energy than your competitors. Also, for some reason in 1000 years, Javascript, Python, and Java continue to be prevalent langauges for AI.
