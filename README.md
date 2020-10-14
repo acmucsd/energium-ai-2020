@@ -10,7 +10,7 @@ The live competition can be found here: https://ai.acmucsd.com/competitions/ener
 
 ## Getting Started
 
-Download a starter kit of your choice from [Javascript](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/js/jskit.zip), [Python](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/python/pythonkit.zip), or [Java](). Please note, Windows is not supported, please use WSL to access a linux distribution. See [this](https://github.com/KNOXDEV/wsl) for instructions on how to use WSL.
+Download a starter kit of your choice from [Javascript](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/js/jskit.zip), [Python](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/python/pythonkit.zip), or [Java](https://github.com/acmucsd/energium-ai-2020/raw/main/kits/java/javakiit.zip). Please note, Windows is not supported, please use WSL to access a linux distribution. See [this](https://github.com/KNOXDEV/wsl) for instructions on how to use WSL.
 
 Make sure you have [Node.js](https://nodejs.org/) installed, of at least version 12 or above.
 
