@@ -57,7 +57,7 @@ Collectors can move in 4 directions, North, East, South, West. The starter kit s
 
 Each collector has a breakdown level. This breakdown level resets to 0 each time the collector moves over a friendly **base**. As time passes, the collector slowly becomes more broken down. Once the breakdown level is 10, the collector malfunctions and vanishes.
 
-If two collectors, regardless of what team they are on, end up on the same tile on the map after a turn, the collector with the least breakdown level will survive and all collectors on the same tile will break down. If there's a tie in least breakdown level, all collectors break down.
+If two collectors, regardless of what team they are on, end up on the same tile on the map after a turn, the collector with the least breakdown level will survive and all other collectors on the same tile will break down. If there's a tie in least breakdown level, all collectors break down.
 
 Collectors automatically gain or lose energium depending on the `energium` value stored on the tile the collector is on. Be wary that some tiles are severely energy defficient, and can cause you to lose more energium by standing on it. Note that energium is special in that it cannot be depleted anywhere, it will always output that much energium whenever a collector is on it.
 
