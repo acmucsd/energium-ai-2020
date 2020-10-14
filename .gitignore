@@ -2,6 +2,8 @@ node_modules
 lib
 coverage
 .nyc_output
+bundles/visualizer/dist
+bundles/visualizer/package*.json
 
 # we have mac users
 .DS_Store
