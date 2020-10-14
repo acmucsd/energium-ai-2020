@@ -4,13 +4,15 @@ Upon the dawn of the new millenium, energy has become currency, the most preciou
 
 <img src="/workers.png" width=200>
 
-*a pair of collectors*
+_a pair of collectors_
 
 But time is of the essence, and these robots need an AI to help them run effectively and mine as much energium possible before time runs out. What makes matters worse is, there's always a rival corporation on the same asteroid for some reason, trying to mine the resources too. Your goal is to build the best AI agent to control these collectors and get more energy than your competitors. Also, for some reason in 1000 years, Javascript, Python, and Java continue to be prevalent langauges for AI.
 
 See [Getting Started](#Getting-Started) to start programming and uploading a bot to compete against others! See [Specs](#Specs) for details on how the competition works, and how to develop your bot.
 
-The live competition can be found here: https://ai.acmucsd.com/competitions/energium
+The live competition can be found here: https://ai.acmucsd.com/competitions/energium and will officially conclude after next Saturday.
+
+Kickoff slides for this competition are here: https://docs.google.com/presentation/d/1hBUV9zxmBHi8wuQEHHaNUJK0xEe4ekS8ofq7u9NE6H4/edit#slide=id.ga1eb4373bd_0_456
 
 ## Getting Started
 
@@ -43,6 +45,12 @@ zip -r bot.zip .
 ```
 
 Once you submit, our servers will automatically put your bot into matches and store all results, replays, and logs online. Go to https://ai.acmucsd.com/competitions/energium/ranks to see the current leaderboard as well as find matches and watch them.
+
+For more options such as seeding, suppress logs, changing max computation time, use
+
+```
+acmai-energium --help
+```
 
 Keep reading to learn how the competition works and the rules of the AI game
 
