@@ -28,9 +28,9 @@ acmai-energium path/to/bot/folder path/to/other/bot/folder
 
 and it will output the game results, any relevant logs, store error logs in a `errorlogs` folder, and store a replay in a `replays` folder.
 
-If you some output that doesn't look like an error, then congratulations! You just ran your first AI match! To use our visualizer and watch what unfolded, download our visualizer here:
+If you have some output that doesn't look like an error, then congratulations! You just ran your first AI match! To use our visualizer and watch what unfolded, download our visualizer here: https://github.com/acmucsd/energium-ai-2020/raw/main/bundles/visualizer/visualizer.zip
 
-To install the visualizer, first do `npm run i` in the visualizer's folder, and then run `npm run serve` to start the visualizer up. Upload a replay file and the visualizer will show you what went down!
+To install the visualizer, open the zip file, then navigate to the visualizer folder and run `npm run i` in the visualizer's folder. Then run `npm run serve` to start the visualizer up and it will give you the link to where you can access the visualizer. Upload a replay file and the visualizer will show you what went down!
 
 You can submit your bot to our servers as many times as you like! To submit your bot, zip the contents of your folder by navigating to your bot folder and running
 
