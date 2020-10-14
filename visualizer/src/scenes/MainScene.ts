@@ -101,12 +101,13 @@ class MainScene extends Phaser.Scene {
   private onTileClicked(v: Position) {
     const f = this.frames[this.turn];
     const unitDataAtXY: FrameUnitData = new Map();
-
+    console.log({turn: this.turn}, {f}, v.x, v.y);
     f.unitData.forEach((unit) => {
       if (unit.pos.x === v.x && unit.pos.y === v.y) {
         unitDataAtXY.set(unit.id, unit);
       }
     });
+    console.log(unitDataAtXY);
     const clickedPos = new Position(v.x, v.y);
     this.handleTileClicked({
       pos: clickedPos,
@@ -122,10 +123,10 @@ class MainScene extends Phaser.Scene {
       return 1;
     }
     if (pts < 0) {
-      return Math.min(8 - Math.round(pts / 2), 19);
+      return Math.min(14 - Math.round(pts / 2), 19);
     }
     if (pts > 0) {
-      return Math.max(6 - Math.round(pts / 2), 2);
+      return Math.min(Math.round(pts / 2) + 1, 8);
     }
   }
 

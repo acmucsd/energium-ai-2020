@@ -20,14 +20,14 @@ export const createGame = (configs: GameCreationConfigs): Phaser.Game => {
   config.width = 32 * mapWidth;
     config.height = 32 * mapWidth;
   if (mapWidth <= 12) {
-    config.zoom = 1.5;
+    config.zoom = 2;
   }
   else if (mapWidth <= 16) {
-    config.zoom = 1;
+    config.zoom = 1.5;
   } else if (mapWidth <= 20) {
-    config.zoom = 0.75;
+    config.zoom = 1.2;
   } else {
-    config.zoom = 0.5
+    config.zoom = 0.75;
   }
   
   const game = new Phaser.Game(config);

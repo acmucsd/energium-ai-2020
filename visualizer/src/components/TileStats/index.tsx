@@ -23,7 +23,7 @@ const TileStats = ({ pos, units, pointsPerTurn }: TileStatsProps) => {
       <Grid container className="UnitStats">
         {Array.from(units.values()).map((v) => {
           return (
-            <Grid item className="UnitData" xs={3} key={v.id}>
+            <Grid item className="UnitData" xs={6} key={v.id}>
               <UnitCard {...v} />
             </Grid>
           );

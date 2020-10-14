@@ -248,7 +248,7 @@ export const GameComponent = () => {
         <ThemeProvider theme={theme}>
 
         <Grid container spacing={3}>
-          <Grid item xs={6}>
+          <Grid item xs={9}>
             <Card
               className={classnames({
                 'phaser-wrapper': true,
@@ -326,7 +326,7 @@ export const GameComponent = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Card className="stats">
               <CardContent>
                 {selectedTileData && (
@@ -334,7 +334,7 @@ export const GameComponent = () => {
                     {...selectedTileData}
                   />
                 )}
-                <GameStats turn={turn} />
+                {isReady && <GameStats turn={turn} seed={main.replayData.seed} size={main.replayData.map.length} />}
                 {currentFrame !== null &&
                   [0, 1].map((team: Unit.TEAM) => {
                     return (
