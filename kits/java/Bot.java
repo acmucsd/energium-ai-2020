@@ -12,9 +12,9 @@ public class Bot {
 
             ArrayList<String> commands = new ArrayList<>();
             /** Your player object */
-            Player player = agent.players.get(0);
+            Player player = agent.players.get(agent.id);
             /** Opponent player object */
-            Player opponent = agent.players.get(1);
+            Player opponent = agent.players.get((agent.id + 1) % 2);
 
             /** All of your bases */
             ArrayList<Base> bases = player.bases;

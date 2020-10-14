@@ -28,7 +28,7 @@ agent.initialize().then(async () => {
     /**
      * Let your creativity go wild. Feel free to change this however you want and
      * submit it as many times as you want to the servers
-    */
+     */
     let commands = [];
 
     // spawn unit until we have 4 units
@@ -49,6 +49,9 @@ agent.initialize().then(async () => {
         // choose a random direction to move in
         // food for thought - is this optimal to do?
         randomDirection = ALL_DIRECTIONS[Math.floor(Math.random() * ALL_DIRECTIONS.length)];
+
+        // move in that direction if the tile the unit would move towards is not
+        // negative in energium and is on the map
         newPos = unit.pos.translate(randomDirection, 1);
         if (newPos.x >= 0 && newPos.x < agent.mapWidth && newPos.y >= 0 && newPos.y < agent.mapHeight) {
           if (agent.map.getTileByPos(newPos).energium < 0) {

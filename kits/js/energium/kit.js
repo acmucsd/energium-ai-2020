@@ -105,7 +105,6 @@ class Agent {
     this.resetPlayerStates();
     while (true) {
       let update = (await this.getLine());
-      // console.error(update);
       if (update.str === INPUT_CONSTANTS.DONE) {
         break;
       }

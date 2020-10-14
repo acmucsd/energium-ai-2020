@@ -56,7 +56,7 @@ class Agent:
                 x = int(update[1])
                 y = int(update[2])
                 pts = int(update[3])
-                tile = self.map.getTile(x, y);
+                tile = self.map.get_tile(x, y);
                 tile.energium = pts;
             elif input_id == 'p':
                 team = int(update[1])

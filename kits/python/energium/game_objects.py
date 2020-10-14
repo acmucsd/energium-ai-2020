@@ -2,7 +2,7 @@ from typing import List
 from .position import Position
 from .game_constants import GAME_CONSTANTS
 import math
-
+import sys
 class Base:
     def __init__(self, team: int, x, y):
         self.team = team
@@ -19,8 +19,8 @@ class Unit:
         self.pos = Position(x, y)
         self.last_repair_turn = last_repair_turn
         self.match_turn = turn
-    def getBreakdownLevel(self):
-        return math.floor((self.matchTurn - self.lastRepairTurn) / GAME_CONSTANTS.PARAMETERS.BREAKDOWN_TURNS)
+    def get_breakdown_level(self):
+        return math.floor((self.match_turn - self.last_repair_turn) / GAME_CONSTANTS['PARAMETERS']['BREAKDOWN_TURNS'])
     def move(self, dir):
         return 'm {} {}'.format(self.id, dir)
 
