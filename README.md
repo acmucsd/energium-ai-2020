@@ -10,7 +10,7 @@ But time is of the essence, and these robots need an AI to help them run effecti
 
 See [Getting Started](#Getting-Started) to start programming and uploading a bot to compete against others! See [Specs](#Specs) for details on how the competition works, and how to develop your bot.
 
-The live competition can be found here: https://ai.acmucsd.com/competitions/energium and will officially conclude after next Saturday.
+The live competition can be found here: https://ai.acmucsd.com/competitions/energium and will officially conclude October 30th 11:59PM PDT.
 
 Kickoff slides for this competition are here: https://docs.google.com/presentation/d/1hBUV9zxmBHi8wuQEHHaNUJK0xEe4ekS8ofq7u9NE6H4/edit#slide=id.ga1eb4373bd_0_456
 
