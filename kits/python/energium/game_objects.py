@@ -19,7 +19,11 @@ class Unit:
         self.pos = Position(x, y)
         self.last_repair_turn = last_repair_turn
         self.match_turn = turn
+    
     def get_breakdown_level(self):
+        """
+        returns the breakdown level of this unit
+        """
         return math.floor((self.match_turn - self.last_repair_turn) / GAME_CONSTANTS['PARAMETERS']['BREAKDOWN_TURNS'])
     def move(self, dir):
         return 'm {} {}'.format(self.id, dir)
