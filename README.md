@@ -1,6 +1,6 @@
 # Energium AI Competition at UCSD
 
-Upon the dawn of the new millenium, energy has become currency, the most precious resource after majority of Earth's resources have been mined out. You are an energy corporation with the technology of **Collectors**, robots that can mine a energy rich resource known as energium on the asteroid belts of our solar system.
+Upon the dawn of the new millennium, energy has become currency, the most precious resource after majority of Earth's resources have been mined out. You are an energy corporation with the technology of **Collectors**, robots that can mine a energy rich resource known as energium on the asteroid belts of our solar system.
 
 <img src="/workers.png" width=200>
 
