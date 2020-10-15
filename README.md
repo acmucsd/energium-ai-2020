@@ -65,7 +65,7 @@ You are also given a `GameMap` object with data on all the map tiles, and the en
 **Collectors**
 Collectors can move in 4 directions, North, East, South, West. The starter kit shows you how to move units using the `move` function.
 
-Each collector has a breakdown level. This breakdown level resets to 0 each time the collector moves over a friendly **base**. As time passes, the collector slowly becomes more broken down. Once the breakdown level is 10, the collector malfunctions and vanishes.
+Each collector has a breakdown level. This breakdown level resets to 0 each time the collector moves over a friendly **base**. As time passes, the collector slowly becomes more broken down, with the level increasing once every 10 turns. Once the breakdown level is 10, the collector malfunctions and vanishes.
 
 If two collectors, regardless of what team they are on, end up on the same tile on the map after a turn, the collector with the least breakdown level will survive and all other collectors on the same tile will break down. If there's a tie in least breakdown level, all collectors break down.
 
