@@ -20,18 +20,18 @@ while True:
     commands = []
 
     # player is your player object, opponent is the opponent's
-    player = agent.players[agent.id];
-    opponent = agent.players[(agent.id + 1) % 2];
+    player = agent.players[agent.id]
+    opponent = agent.players[(agent.id + 1) % 2]
 
     # all your collectorunits
-    my_units = player.units;
+    my_units = player.units
 
     # all your bases
-    my_bases = player.bases;
+    my_bases = player.bases
 
     # use print("msg", file=sys.stderr) to print messages to the terminal or your error log.
     # normal prints are reserved for the match engine. Uncomment the lines below to log something
-    # print('Turn {} | ID: {} - {} bases - {} units - energium {}'.format(agent.turn, player.team, len(my_bases), len(my_units), player.energium), file=sys.stderr);
+    # print('Turn {} | ID: {} - {} bases - {} units - energium {}'.format(agent.turn, player.team, len(my_bases), len(my_units), player.energium), file=sys.stderr)
 
     ### AI Code goes here ###
 
@@ -40,7 +40,7 @@ while True:
 
     # spawn unit until we have 4 units
     if len(my_units) < 4 and player.energium >= GAME_CONSTANTS["PARAMETERS"]["UNIT_COST"]:
-        commands.append(my_bases[0].spawn_unit());
+        commands.append(my_bases[0].spawn_unit())
     
     # iterate over all of our collectors and make them do something
     for unit in my_units:

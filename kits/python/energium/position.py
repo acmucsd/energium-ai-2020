@@ -12,8 +12,8 @@ class Position:
         """
         returns true if this position is adjacent to pos
         """
-        dx = self.x - pos.x;
-        dy = self.y - pos.y;
+        dx = self.x - pos.x
+        dy = self.y - pos.y
         if (math.abs(dx) + math.abs(dy) > 1):
             return False
         return True
@@ -37,7 +37,7 @@ class Position:
         """
         dx = pos.x - self.x
         dy = pos.y - self.y
-        return math.sqrt(dx * dx + dy * dy);
+        return math.sqrt(dx * dx + dy * dy)
 
     def direction_to(self, targetPos):
         """
@@ -48,7 +48,7 @@ class Position:
             DIRECTIONS.EAST,
             DIRECTIONS.SOUTH,
             DIRECTIONS.WEST,
-        ];
+        ]
         closestDirection = None
         closestDist = self.distance_to(targetPos)
         for dir in checkDirections:
