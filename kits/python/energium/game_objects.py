@@ -24,7 +24,7 @@ class Unit:
         """
         returns the breakdown level of this unit
         """
-        return math.floor((self.match_turn - self.last_repair_turn) / GAME_CONSTANTS['PARAMETERS']['BREAKDOWN_TURNS'])
+        return (self.match_turn - self.last_repair_turn) / GAME_CONSTANTS['PARAMETERS']['BREAKDOWN_TURNS'];
     def move(self, dir):
         return 'm {} {}'.format(self.id, dir)
 

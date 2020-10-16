@@ -47,7 +47,7 @@ class Unit {
   }
 
   getBreakdownLevel() {
-    return Math.floor((this.matchTurn - this.lastRepairTurn) / GAME_CONSTANTS.PARAMETERS.BREAKDOWN_TURNS);
+    return (this.matchTurn - this.lastRepairTurn) / GAME_CONSTANTS.PARAMETERS.BREAKDOWN_TURNS;
   }
 }
 

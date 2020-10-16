@@ -10,7 +10,7 @@ export class Unit {
   ) {}
   /** How broken down the unit is. past max, the unit should vanish */
   getBreakdownLevel(turn: number, breakdownRate: number): number {
-    return Math.floor((turn - this.lastRepairTurn) / breakdownRate);
+    return (turn - this.lastRepairTurn) / breakdownRate;
   }
 }
 export namespace Unit {

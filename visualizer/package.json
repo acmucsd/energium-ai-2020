@@ -34,7 +34,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@acmucsd/energium-2020": "^1.3.0",
+    "@acmucsd/energium-2020": "^1.4.0",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",

@@ -26,7 +26,7 @@ public class Unit {
   }
 
   /** returns the breakdown level of this unit */
-  public int getBreakdownLevel() {
-    return (int) Math.floor((this.matchTurn - this.lastRepairTurn) / GameConstants.BREAKDOWN_TURNS);
+  public double getBreakdownLevel() {
+    return ((double) this.matchTurn - this.lastRepairTurn) / GameConstants.BREAKDOWN_TURNS;
   }
 }

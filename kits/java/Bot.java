@@ -47,6 +47,7 @@ public class Bot {
 
                 // first we check the breakdown level, if unit is about to break down, lets make
                 // it move towards a random friendly base
+                System.err.println(unit.getBreakdownLevel());
                 if (unit.getBreakdownLevel() >= GameConstants.BREAKDOWN_MAX - 2) {
                     Direction directionBackToBase = unit.pos.directionTo(bases.get(0).pos);
                     commands.add(unit.move(directionBackToBase));
