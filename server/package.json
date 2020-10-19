@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@acmucsd/energium-2020": "^1.4.0",
-    "dimensions-ai": "^4.6.6"
+    "dimensions-ai": "^4.6.8"
   },
   "devDependencies": {
     "typescript": "^4.0.2"
