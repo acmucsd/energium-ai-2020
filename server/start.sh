@@ -14,6 +14,7 @@ cp ./000-default.conf /etc/apache2/sites-available/
 
 # change the configs
 a2enmod proxy 
+a2enmod headers
 a2enmod proxy_http
 a2enmod proxy_balancer
 a2enmod lbmethod_byrequests
