@@ -14,7 +14,7 @@ class Position:
         """
         dx = self.x - pos.x
         dy = self.y - pos.y
-        if (math.abs(dx) + math.abs(dy) > 1):
+        if (abs(dx) + abs(dy) > 1):
             return False
         return True
     def translate(self, direction, units):
