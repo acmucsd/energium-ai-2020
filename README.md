@@ -12,6 +12,8 @@ See [Getting Started](#Getting-Started) to start programming and uploading a bot
 
 The live competition can be found here: https://ai.acmucsd.com/competitions/energium and will officially conclude October 30th 11:59PM PDT.
 
+Kickoff Video is on youtube here: https://www.youtube.com/watch?v=lI2EHGGvoYo&t=1s
+
 Kickoff slides for this competition are here: https://docs.google.com/presentation/d/1hBUV9zxmBHi8wuQEHHaNUJK0xEe4ekS8ofq7u9NE6H4/edit#slide=id.ga1eb4373bd_0_456
 
 ## Getting Started
