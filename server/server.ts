@@ -2,6 +2,7 @@ import {create} from 'dimensions-ai/lib/main';
 import {Agent} from 'dimensions-ai/lib/main/Agent';
 import { EnergiumDesign } from '@acmucsd/energium-2020';
 import { GCloudStorage, Logger, MongoDB, Tournament } from 'dimensions-ai';
+import { Scheduler } from 'dimensions-ai/lib/main/Tournament/Scheduler';
 
 const design = new EnergiumDesign('kothdesign');
 //@ts-ignore
@@ -46,6 +47,12 @@ const setup = async () => {
     tournamentConfigs: {
       syncConfigs: true,
       maxConcurrentMatches: 1,
+      matchMake: Scheduler.TrueskillVarianceWeighted({
+        seed: 0,
+        range: 3,
+        matchCount: 10,
+        agentsPerMatch: [2],
+      })
     },
     defaultMatchConfigs: {
       storeErrorLogs: true,

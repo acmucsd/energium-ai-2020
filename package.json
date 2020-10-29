@@ -36,7 +36,7 @@
   "dependencies": {
     "@types/jszip": "^3.4.1",
     "colors": "^1.4.0",
-    "dimensions-ai": "^4.6.6",
+    "dimensions-ai": "^4.6.12",
     "jszip": "^3.5.0",
     "seedrandom": "^3.0.5",
     "yargs": "^16.0.3"
