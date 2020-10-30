@@ -26,7 +26,6 @@ class Unit:
         """
         return (self.match_turn - self.last_repair_turn) / GAME_CONSTANTS['PARAMETERS']['BREAKDOWN_TURNS'];
     def move(self, dir):
-        self.pos = self.pos.translate(dir, 1)
         return 'm {} {}'.format(self.id, dir)
 
 class Player:
