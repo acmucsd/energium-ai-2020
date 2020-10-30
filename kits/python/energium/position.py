@@ -5,6 +5,9 @@ class Position:
         self.x = x
         self.y = y
 
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
     def equals(self, opos):
         return self.x == opos.x and self.y == opos.y
 
@@ -35,26 +38,22 @@ class Position:
         """
         returns euclidean distance to the pos from this position
         """
-        dx = pos.x - self.x
-        dy = pos.y - self.y
-        return math.sqrt(dx * dx + dy * dy)
+        return abs(self.x - pos.x) + abs(self.y - pos.y)
 
-    def direction_to(self, targetPos):
-        """
-        gives direction that moves closest to targetPos from this position or None if staying put is closer
-        """
-        checkDirections = [
-            DIRECTIONS.NORTH,
-            DIRECTIONS.EAST,
-            DIRECTIONS.SOUTH,
-            DIRECTIONS.WEST,
-        ]
-        closestDirection = None
-        closestDist = self.distance_to(targetPos)
-        for dir in checkDirections:
+    def direction_to(self, target):
+        closest_direction = None
+        taxicab_dist = taxicab_distance(self, target)
+        bigger_side_length = max(abs(self.x - target.x), abs(self.y - target.y))
+        for dir in ALL_DIRECTIONS: # ALL_DIRECTIONS is defined at the top of bot.py
             newpos = self.translate(dir, 1)
-            dist = targetPos.distance_to(newpos)
-            if (dist < closestDist):
-                closestDist = dist
-                closestDirection = dir
-        return closestDirection
+            dist = taxicab_distance(newpos, target)
+            if dist < taxicab_dist:
+                taxicab_dist = dist
+                bigger_side_length = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
+                closest_direction = dir
+            elif dist == taxicab_dist:
+                s = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
+                if s < bigger_side_length:
+                    bigger_side_length = s
+                    closest_direction = dir
+        return closest_direction
