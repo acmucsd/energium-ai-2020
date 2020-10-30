@@ -44,7 +44,8 @@ class Position:
         closest_direction = None
         taxicab_dist = taxicab_distance(self, target)
         bigger_side_length = max(abs(self.x - target.x), abs(self.y - target.y))
-        for dir in ALL_DIRECTIONS: # ALL_DIRECTIONS is defined at the top of bot.py
+        for dir in [DIRECTIONS.NORTH, DIRECTIONS.EAST,
+                    DIRECTIONS.SOUTH, DIRECTIONS.WEST]:
             newpos = self.translate(dir, 1)
             dist = taxicab_distance(newpos, target)
             if dist < taxicab_dist:
