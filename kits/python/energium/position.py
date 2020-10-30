@@ -38,9 +38,40 @@ class Position:
         """
         returns euclidean distance to the pos from this position
         """
+        dx = pos.x - self.x
+        dy = pos.y - self.y
+        return math.sqrt(dx * dx + dy * dy)
+
+    def direction_to(self, targetPos):
+        """
+        gives direction that moves closest to targetPos from this position or None if staying put is closer
+        """
+        checkDirections = [
+            DIRECTIONS.NORTH,
+            DIRECTIONS.EAST,
+            DIRECTIONS.SOUTH,
+            DIRECTIONS.WEST,
+        ]
+        closestDirection = None
+        closestDist = self.distance_to(targetPos)
+        for dir in checkDirections:
+            newpos = self.translate(dir, 1)
+            dist = targetPos.distance_to(newpos)
+            if (dist < closestDist):
+                closestDist = dist
+                closestDirection = dir
+        return closestDirection
+
+    def taxicab_distance_to(self, pos):
+        """
+        returns taxicab distance to the pos from this position
+        """
         return abs(self.x - pos.x) + abs(self.y - pos.y)
 
-    def direction_to(self, target):
+    def direction_to_quick(self, target):
+        """
+        Same as direction_to but runs quicker.
+        """
         closest_direction = None
         taxicab_dist = taxicab_distance(self, target)
         bigger_side_length = max(abs(self.x - target.x), abs(self.y - target.y))
