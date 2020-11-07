@@ -14,6 +14,9 @@ const acmdim = create(design, {
   secureMode: true,
   observe: true,
   activateStation: true,
+  stationConfigs: {
+    disableUploads: true,
+  }
 });
 
 /** Define the images to use for each agent */
